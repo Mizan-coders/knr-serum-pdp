@@ -97,6 +97,7 @@
     { "type": "header", "content": "À propos" },
     { "type": "text", "id": "about_heading", "label": "Titre", "default": "À propos de Maison Célestine" },
     { "type": "textarea", "id": "about_text", "label": "Texte", "default": "Maison Célestine est une marque de soins anti-âge haut de gamme formulés à partir d'ingrédients d'origine naturelle soigneusement sélectionnés." },
+    { "type": "image_picker", "id": "cosmos_logo", "label": "Logo certification (fallback : Calque_1.png)" },
     { "type": "text", "id": "cert_text", "label": "Certification", "default": "Certifié COSMOS ORGANIC par ECOCERT Greenlife" },
     { "type": "text", "id": "cert_link_label", "label": "Lien certificat", "default": "Voir le certificat" },
     { "type": "url", "id": "cert_link", "label": "URL certificat" },
@@ -136,11 +137,8 @@
 .knr-foot__about--desk { display: none; }
 .knr-foot__about h4 { font-size: 15px; font-weight: 500; margin-bottom: 16px; }
 .knr-foot__about p { font-size: 12px; line-height: 20px; letter-spacing: -0.02em; color: #46433b; max-width: 52ch; }
-.knr-foot__cosmos { display: flex; flex-direction: column; gap: 12px; margin-top: 26px; }
-.knr-cosmos-badge { width: 74px; height: 74px; border-radius: 50%; border: 1.5px solid var(--knr-ink); display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; line-height: 1.1; }
-.knr-cosmos-badge b { font-size: 13px; }
-.knr-cosmos-badge small { font-size: 7px; letter-spacing: 0.08em; }
-.knr-foot__cosmos .lbl b { font-size: 13px; display: block; }
+.knr-foot__cosmos { margin-top: 26px; }
+.knr-cosmos-logo { width: 64px; height: auto; display: block; }
 .knr-foot__cert { font-size: 12px; line-height: 20px; letter-spacing: -0.02em; color: #46433b; margin-top: 24px; }
 .knr-foot__certlink { display: block; margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--knr-line); font-size: 15px; }
 .knr-foot__certlink span { display: inline-block; }
