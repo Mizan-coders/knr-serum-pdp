@@ -346,8 +346,20 @@
     });
   }
 
+  /* Mobile menu drawer. */
+  function initMenu() {
+    var menu = $('[data-knr-menu]');
+    if (!menu) return;
+    var open = function () { menu.hidden = false; document.body.style.overflow = 'hidden'; };
+    var close = function () { menu.hidden = true; document.body.style.overflow = ''; };
+    $$('[data-knr-menu-toggle]').forEach(function (el) { el.addEventListener('click', open); });
+    $$('[data-knr-menu-close]', menu).forEach(function (el) { el.addEventListener('click', close); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) close(); });
+  }
+
   function init() {
     initLocalization();
+    initMenu();
     initHeader();
     initAccordions();
     initVariantPicker();

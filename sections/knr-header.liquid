@@ -29,7 +29,7 @@
           {% render 'knr-icon', name: 'bag' %}
           <span class="knr-bag-count" data-knr-cart-count{% if cart.item_count == 0 %} hidden{% endif %}>{{ cart.item_count }}</span>
         </a>
-        <button class="knr-burger" type="button" aria-label="Menu">{% render 'knr-icon', name: 'menu' %}</button>
+        <button class="knr-burger" type="button" aria-label="Menu" data-knr-menu-toggle>{% render 'knr-icon', name: 'menu' %}</button>
       </div>
     </div>
   </header>
@@ -48,6 +48,21 @@
         <a href="{{ routes.cart_url }}/checkout" class="knr-btn knr-btn--dark">Commander</a>
       </div>
     </aside>
+  </div>
+
+  <div class="knr-menu" data-knr-menu hidden>
+    <div class="knr-menu__backdrop" data-knr-menu-close></div>
+    <nav class="knr-menu__panel" role="dialog" aria-label="Menu" aria-modal="true">
+      <div class="knr-menu__head">
+        <span class="knr-menu__logo">{{ section.settings.logo_text | default: shop.name }}</span>
+        <button class="knr-menu__close" type="button" aria-label="Fermer" data-knr-menu-close>&times;</button>
+      </div>
+      <ul class="knr-menu__list">
+        {%- for link in menu.links -%}
+          <li><a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </nav>
   </div>
 </div>
 
@@ -102,6 +117,17 @@
 .knr-drawer__foot { border-top: 1px solid var(--knr-line); padding: 20px 24px; display: flex; flex-direction: column; gap: 10px; }
 .knr-drawer__foot[hidden] { display: none; }
 .knr-drawer__subtotal-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; }
+
+/* Mobile menu */
+.knr-menu { position: fixed; inset: 0; z-index: 60; }
+.knr-menu[hidden] { display: none; }
+.knr-menu__backdrop { position: absolute; inset: 0; background: rgba(20, 18, 14, 0.4); }
+.knr-menu__panel { position: absolute; top: 0; left: 0; height: 100%; width: 82%; max-width: 360px; background: var(--knr-bg); color: var(--knr-ink); padding: 20px 24px; display: flex; flex-direction: column; }
+.knr-menu__head { display: flex; justify-content: space-between; align-items: center; }
+.knr-menu__logo { font-family: var(--knr-font-brand); font-size: 20px; color: var(--knr-ink); }
+.knr-menu__close { font-size: 28px; line-height: 1; color: var(--knr-ink); }
+.knr-menu__list { list-style: none; margin: 32px 0 0; padding: 0; display: flex; flex-direction: column; }
+.knr-menu__list a { display: block; padding: 15px 0; font-size: 20px; letter-spacing: -0.02em; color: var(--knr-ink); border-bottom: 1px solid var(--knr-line); }
 
 @media (min-width: 900px) {
   .knr-header .knr-wrap { max-width: none; padding: 0 24px; }
