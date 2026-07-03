@@ -11,8 +11,10 @@
             <p class="knr-nl__success">{{ section.settings.success_text }}</p>
           {%- else -%}
             <input type="hidden" name="contact[tags]" value="newsletter">
-            <input class="knr-nl__field" type="email" name="contact[email]" placeholder="{{ section.settings.placeholder }}" required>
-            <button type="submit" class="knr-btn knr-btn--dark">{{ section.settings.button_label }}</button>
+            <div class="knr-nl__row">
+              <input class="knr-nl__field" type="email" name="contact[email]" placeholder="{{ section.settings.placeholder }}" required>
+              <button type="submit" class="knr-btn knr-btn--dark knr-nl__submit">{{ section.settings.button_label }}</button>
+            </div>
           {%- endif -%}
         {%- endform -%}
         {%- if section.settings.note != blank -%}<p class="knr-nl__note">{{ section.settings.note }}</p>{%- endif -%}
@@ -44,7 +46,9 @@
 .knr-nl__img { aspect-ratio: 1.4 / 1; overflow: hidden; margin-bottom: 36px; }
 .knr-nl__img img { width: 100%; height: 100%; object-fit: cover; }
 .knr-nl h2 { font-size: 40px; font-weight: 400; line-height: 48px; letter-spacing: -0.04em; margin-bottom: 28px; }
-.knr-nl__field { border: 1px solid var(--knr-ink); padding: 16px; font-size: 15px; width: 100%; background: transparent; margin-bottom: 14px; font-family: inherit; }
+.knr-nl__row { display: flex; gap: 10px; align-items: stretch; }
+.knr-nl__field { flex: 1; min-width: 0; height: 48px; border: 0.8px solid var(--knr-ink); border-radius: 2px; padding: 0 24px; font-size: 15px; background: transparent; font-family: inherit; }
+.knr-root .knr-nl__submit { width: auto; flex: none; height: 48px; padding: 0 32px; border-radius: 2px; }
 .knr-nl__note { font-size: 12px; line-height: 20px; letter-spacing: -0.02em; color: var(--knr-muted); margin-top: 18px; }
 .knr-nl__success { font-size: 15px; color: var(--knr-ink); }
 
