@@ -52,12 +52,13 @@
             {%- form 'localization', class: 'knr-foot__loc' -%}
               <input type="hidden" name="return_to" value="{{ request.path }}">
               <label class="knr-foot__locfield">
+                <span class="knr-foot__locvalue">{{ localization.country.name }} ({{ localization.country.currency.iso_code }})</span>
+                {% render 'knr-icon', name: 'chevron' %}
                 <select name="country_code" data-knr-loc aria-label="Pays / devise">
                   {%- for country in localization.available_countries -%}
                     <option value="{{ country.iso_code }}"{% if country.iso_code == localization.country.iso_code %} selected{% endif %}>{{ country.name }} ({{ country.currency.iso_code }})</option>
                   {%- endfor -%}
                 </select>
-                {% render 'knr-icon', name: 'chevron' %}
               </label>
             {%- endform -%}
           {%- endif -%}
@@ -65,12 +66,13 @@
             {%- form 'localization', class: 'knr-foot__loc' -%}
               <input type="hidden" name="return_to" value="{{ request.path }}">
               <label class="knr-foot__locfield">
+                <span class="knr-foot__locvalue">{{ localization.language.endonym_name | capitalize }}</span>
+                {% render 'knr-icon', name: 'chevron' %}
                 <select name="locale_code" data-knr-loc aria-label="Langue">
                   {%- for language in localization.available_languages -%}
                     <option value="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} selected{% endif %}>{{ language.endonym_name | capitalize }}</option>
                   {%- endfor -%}
                 </select>
-                {% render 'knr-icon', name: 'chevron' %}
               </label>
             {%- endform -%}
           {%- endif -%}
@@ -147,8 +149,9 @@
 .knr-foot__selects { display: flex; gap: 26px; justify-content: center; font-size: 14px; margin-bottom: 14px; }
 .knr-foot__loc { margin: 0; }
 .knr-foot__locfield { position: relative; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
-.knr-foot__locfield select { appearance: none; -webkit-appearance: none; font: inherit; color: inherit; background: none; border: none; padding: 0; margin: 0; cursor: pointer; }
+.knr-foot__locvalue { white-space: nowrap; }
 .knr-foot__locfield svg { width: 14px; height: 14px; pointer-events: none; }
+.knr-foot__locfield select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; border: none; -webkit-appearance: none; appearance: none; }
 .knr-foot__copy { font-size: 13px; color: var(--knr-muted); }
 .knr-foot__social { display: flex; gap: 24px; justify-content: center; margin-top: 18px; }
 .knr-foot__social svg { width: 18px; height: 18px; }
