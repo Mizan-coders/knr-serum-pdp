@@ -1,0 +1,329 @@
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign first_collection = product.collections.first
+  assign images = product.images
+  assign accordion_blocks = section.blocks | where: 'type', 'accordion'
+  assign related_blocks = section.blocks | where: 'type', 'related'
+  assign has_related = false
+  for block in related_blocks
+    if block.settings.product != blank
+      assign has_related = true
+      break
+    endif
+  endfor
+-%}
+
+<div class="knr-root">
+  <section class="knr-pdp">
+    <div class="knr-gallery">
+      {%- comment -%} Mobile: swipeable rail of every product image {%- endcomment -%}
+      <div class="knr-gallery__rail" data-knr-rail="gallery" data-knr-drag>
+        {%- for image in images -%}
+          <div class="knr-gallery__slide">
+            {{ image | image_url: width: 1200 | image_tag: alt: image.alt | default: product.title, widths: '390,600,900,1200', loading: 'lazy' }}
+          </div>
+        {%- else -%}
+          <div class="knr-gallery__slide">{{ 'product-1' | placeholder_svg_tag }}</div>
+        {%- endfor -%}
+      </div>
+
+      {%- if product.tags.size > 0 -%}
+        <div class="knr-tags">
+          {%- for tag in product.tags limit: 2 -%}<span class="knr-tag">{{ tag }}</span>{%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if images.size > 1 -%}
+        <div class="knr-gdots" data-knr-dots="gallery">
+          {%- for image in images -%}<i {% if forloop.first %}class="on"{% endif %}></i>{%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Desktop: full-width hero + two supporting images {%- endcomment -%}
+      <div class="knr-media">
+        <figure class="knr-media__cell knr-media__cell--hero"{% if images.size > 0 %} data-knr-zoom data-knr-zoom-src="{{ images[0] | image_url: width: 2400 }}"{% endif %}>
+          {%- if images.size > 0 -%}
+            {{ images[0] | image_url: width: 2000 | image_tag: alt: images[0].alt | default: product.title, widths: '900,1200,1600,2000', loading: 'eager', fetchpriority: 'high' }}
+            <span class="knr-media__zoom">{% render 'knr-icon', name: 'plus' %}</span>
+          {%- else -%}
+            <img src="{{ 'knr-product-main.png' | asset_url }}" alt="{{ product.title | escape }}" width="2000" height="1088" loading="eager">
+          {%- endif -%}
+        </figure>
+        <div class="knr-media__row">
+          {%- for image in images offset: 1 limit: 2 -%}
+            <figure class="knr-media__cell" data-knr-zoom data-knr-zoom-src="{{ image | image_url: width: 2400 }}">
+              {{ image | image_url: width: 1000 | image_tag: alt: image.alt | default: product.title, widths: '500,700,1000', loading: 'lazy' }}
+              <span class="knr-media__zoom">{% render 'knr-icon', name: 'plus' %}</span>
+            </figure>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+
+    <div class="knr-info" data-knr-buybox>
+      <nav class="knr-crumb" aria-label="Fil d'Ariane">
+        {%- if first_collection -%}
+          <a href="{{ first_collection.url }}">{{ first_collection.title }}</a>
+        {%- endif -%}
+        {%- if product.type != blank -%}
+          {%- if first_collection -%}<span>/</span>{%- endif -%}
+          <span>{{ product.type }}</span>
+        {%- endif -%}
+      </nav>
+
+      {%- if product.tags.size > 0 -%}
+        <div class="knr-buytags">
+          {%- for tag in product.tags limit: 2 -%}<span class="knr-tag">{{ tag }}</span>{%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <div class="knr-info__head">
+        <h1 class="knr-title">{{ product.title }}</h1>
+        <div class="knr-headrate">
+          {% render 'knr-stars', rating: section.settings.rating %}
+          <span class="knr-headrate__n">{{ section.settings.rating }} · {{ section.settings.review_count }} avis</span>
+        </div>
+      </div>
+
+      {%- if section.settings.certs != blank -%}
+        <div class="knr-certs">{{ section.settings.certs }}</div>
+      {%- endif -%}
+
+      {%- if section.settings.short_description != blank -%}
+        <p class="knr-desc">{{ section.settings.short_description }}</p>
+      {%- endif -%}
+
+      {%- if product.variants.size > 1 -%}
+        <div class="knr-size">
+          <div class="knr-size__label">{{ section.settings.size_label }}</div>
+          <div class="knr-size__opts" data-knr-variants>
+            {%- for variant in product.variants -%}
+              <button
+                type="button"
+                class="knr-size__btn{% if variant.id == current_variant.id %} is-active{% endif %}"
+                data-knr-variant
+                data-variant-id="{{ variant.id }}"
+                data-price="{{ variant.price | money }}"
+                {%- if variant.compare_at_price > variant.price %} data-compare="{{ variant.compare_at_price | money }}"{% endif %}
+                {%- if variant.unit_price_measurement %} data-unit="{{ variant.unit_price | money }} {{ 'par' }} {{ variant.unit_price_measurement.reference_value }}{{ variant.unit_price_measurement.reference_unit }}"{% endif %}
+                data-available="{{ variant.available }}"
+                data-add-label="{{ section.settings.add_label | escape }}"
+                data-sold-label="{{ section.settings.sold_label | escape }}"
+              >{{ variant.title }}</button>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <div class="knr-price-wrap">
+        <span class="knr-price" data-knr-price>{{ current_variant.price | money }}</span>
+        <span class="knr-compare" data-knr-compare{% unless current_variant.compare_at_price > current_variant.price %} hidden{% endunless %}>{{ current_variant.compare_at_price | money }}</span>
+        <span class="knr-per100" data-knr-unit{% unless current_variant.unit_price_measurement %} hidden{% endunless %}>
+          {%- if current_variant.unit_price_measurement -%}
+            {{ current_variant.unit_price | money }} par {{ current_variant.unit_price_measurement.reference_value }}{{ current_variant.unit_price_measurement.reference_unit }}
+          {%- endif -%}
+        </span>
+      </div>
+
+      {%- form 'product', product, class: 'knr-cart-form' -%}
+        <input type="hidden" name="id" value="{{ current_variant.id }}" data-knr-variant-id>
+        <button
+          type="submit"
+          class="knr-btn knr-btn--dark knr-add"
+          data-knr-add
+          {% unless current_variant.available %}disabled{% endunless %}
+        >{% if current_variant.available %}{{ section.settings.add_label }}{% else %}{{ section.settings.sold_label }}{% endif %}</button>
+      {%- endform -%}
+
+      {%- if section.settings.stock_note != blank -%}
+        <div class="knr-stock">{{ section.settings.stock_note }}</div>
+      {%- endif -%}
+
+      {%- if images.size > 1 -%}
+        <div class="knr-cdots">
+          {%- for image in images -%}<i{% if forloop.first %} class="on"{% endif %}></i>{%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if accordion_blocks.size > 0 -%}
+        <div class="knr-accordions" data-knr-acc-group>
+          {%- for block in accordion_blocks -%}
+            <div class="knr-acc{% if block.settings.open %} is-open{% endif %}" data-knr-acc {{ block.shopify_attributes }}>
+              <button class="knr-acc__head" type="button" data-knr-acc-head>
+                {{ block.settings.heading }}
+                {% render 'knr-icon', name: 'chevron' %}
+              </button>
+              <div class="knr-acc__body" data-knr-acc-body>
+                <div class="knr-acc__inner">
+                  {%- if block.settings.use_product_description -%}{{ product.description }}{%- else -%}{{ block.settings.content }}{%- endif -%}
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if has_related -%}
+        <div class="knr-xsell">
+          <div class="knr-xsell__top">
+            <h3>{{ section.settings.crosssell_heading }}</h3>
+            <button type="button" data-knr-rail-next="xsell" aria-label="Suivant">{% render 'knr-icon', name: 'caret-right' %}</button>
+          </div>
+          <div class="knr-xsell__track" data-knr-rail="xsell" data-knr-drag>
+            {%- for block in related_blocks -%}
+              {%- assign item = block.settings.product -%}
+              {%- if item != blank -%}
+                <div class="knr-xsell__card" {{ block.shopify_attributes }}>
+                  <a class="knr-xsell__img" href="{{ item.url }}">
+                    {{ item.featured_image | image_url: width: 500 | image_tag: alt: item.title, widths: '250,400,500', loading: 'lazy' }}
+                    <span class="knr-xsell__plus">{% render 'knr-icon', name: 'plus' %}</span>
+                  </a>
+                  <div class="knr-xsell__meta"><span>{{ item.title }}</span></div>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "KNR Produit",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Informations produit" },
+    { "type": "textarea", "id": "short_description", "label": "Description courte", "default": "Une huile anti-âge sèche ultra fine qui travaille en synergie avec la peau pour la maintenir ferme, pleine de vitalité tout en lissant les rides." },
+    { "type": "richtext", "id": "certs", "label": "Certifications", "default": "<p><strong>Yuka</strong> 100/100 · <strong>INCI Beauty</strong> 20/20</p>" },
+    { "type": "range", "id": "rating", "label": "Note moyenne", "min": 0, "max": 5, "step": 0.1, "default": 4.7 },
+    { "type": "text", "id": "review_count", "label": "Nombre d'avis", "default": "200" },
+    { "type": "text", "id": "size_label", "label": "Libellé des variantes", "default": "Taille" },
+    { "type": "text", "id": "add_label", "label": "Bouton ajouter au panier", "default": "Ajouter au panier" },
+    { "type": "text", "id": "sold_label", "label": "Texte rupture de stock", "default": "Rupture de stock" },
+    { "type": "text", "id": "stock_note", "label": "Note de stock / livraison", "default": "En stock, livraison estimée sous 48h." },
+    { "type": "header", "content": "Complétez votre rituel" },
+    { "type": "text", "id": "crosssell_heading", "label": "Titre", "default": "Complétez votre rituel" }
+  ],
+  "blocks": [
+    {
+      "type": "accordion",
+      "name": "Accordéon",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Titre", "default": "Description" },
+        { "type": "richtext", "id": "content", "label": "Contenu" },
+        { "type": "checkbox", "id": "use_product_description", "label": "Utiliser la description du produit", "default": false },
+        { "type": "checkbox", "id": "open", "label": "Ouvert par défaut", "default": false }
+      ]
+    },
+    {
+      "type": "related",
+      "name": "Produit complémentaire",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Produit" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+.knr-pdp { display: block; }
+
+.knr-gallery { position: relative; }
+.knr-gallery__rail { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; background: var(--knr-cream); }
+.knr-gallery__rail::-webkit-scrollbar { display: none; }
+.knr-gallery__slide { flex: 0 0 100%; scroll-snap-align: center; aspect-ratio: 1 / 1; }
+.knr-gallery__slide img { width: 100%; height: 100%; object-fit: cover; object-position: 33% 46%; }
+
+.knr-tags { position: absolute; top: 26px; left: 0; right: 0; display: flex; gap: 10px; justify-content: center; z-index: 2; }
+.knr-tag { background: #fff; border-radius: 3px; font-size: 12px; line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; padding: 8px 14px; color: #000; }
+.knr-gdots { position: absolute; bottom: 18px; left: 0; right: 0; display: flex; gap: 8px; justify-content: center; z-index: 2; }
+.knr-gdots i { width: 18px; height: 2px; background: rgba(40, 36, 28, 0.3); }
+.knr-gdots i.on { background: #28241c; }
+
+.knr-media { display: none; }
+.knr-media__cell { position: relative; overflow: hidden; background: var(--knr-cream); margin: 0; }
+.knr-media__cell img { width: 100%; height: 100%; object-fit: cover; }
+.knr-media__zoom { position: absolute; right: 16px; bottom: 16px; color: #fff; filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35)); pointer-events: none; }
+.knr-media__zoom svg { width: 20px; height: 20px; stroke-width: 2; }
+.knr-media__cell[data-knr-zoom] { cursor: zoom-in; }
+
+/* Image lightbox (element is appended to <body> by knr.js). */
+.knr-lightbox { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 40px; background: rgba(20, 18, 14, 0.9); cursor: zoom-out; }
+.knr-lightbox[hidden] { display: none; }
+.knr-lightbox__img { max-width: 92vw; max-height: 92vh; object-fit: contain; }
+.knr-lightbox__close { position: absolute; top: 20px; right: 26px; width: 40px; height: 40px; color: #fff; font-size: 30px; line-height: 1; background: none; border: none; cursor: pointer; }
+
+.knr-info { background: #fff; border-radius: 20px 20px 0 0; margin-top: -22px; position: relative; padding: 34px 24px 8px; }
+.knr-info__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.knr-title { font-size: 24px; line-height: 32px; letter-spacing: -0.02em; text-transform: uppercase; font-weight: 400; color: #000; max-width: 62%; margin: 0; }
+.knr-crumb { display: flex; gap: 6px; align-items: center; font-size: 10px; line-height: 14px; letter-spacing: -0.02em; color: #b5a282; margin-bottom: 25px; }
+.knr-crumb a:hover { opacity: 0.7; }
+.knr-buytags { display: none; gap: 4px; margin-bottom: 16px; }
+.knr-buytags .knr-tag { background: transparent; border: 1px solid var(--knr-line-2); color: #000; height: 22px; padding: 0 12px; display: inline-flex; align-items: center; }
+.knr-headrate { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; white-space: nowrap; padding-top: 4px; }
+.knr-headrate .knr-stars { gap: 4px; }
+.knr-headrate .knr-stars svg { width: 12px; height: 12px; }
+.knr-headrate__n { font-size: 10px; line-height: 14px; letter-spacing: -0.02em; color: #e2d3bb; }
+.knr-certs { margin-top: 18px; font-size: 12px; line-height: 20px; letter-spacing: -0.02em; font-weight: 400; color: #3b382f; }
+.knr-certs p { margin: 0; }
+.knr-certs strong { font-weight: 700; }
+.knr-desc { margin-top: 18px; font-size: 12px; line-height: 20px; letter-spacing: -0.02em; color: #000; max-width: 376px; }
+
+.knr-size { margin-top: 30px; }
+.knr-size__label { font-size: 12px; line-height: 20px; letter-spacing: -0.02em; color: #000; margin-bottom: 14px; }
+.knr-size__opts { display: flex; gap: 22px; }
+.knr-size__btn { padding: 0 0 6px; font-size: 12px; line-height: 20px; letter-spacing: -0.02em; color: #86827a; border-bottom: 1.5px solid transparent; transition: 0.2s; }
+.knr-size__btn.is-active { color: #000; border-bottom: 1.5px solid var(--knr-ink); }
+
+.knr-price-wrap { text-align: left; white-space: nowrap; margin-top: 20px; }
+.knr-price { font-size: 24px; line-height: 32px; letter-spacing: -0.02em; color: #000; }
+.knr-compare { font-size: 12px; line-height: 20px; letter-spacing: -0.02em; color: rgba(0, 0, 0, 0.24); text-decoration: line-through; margin-left: 8px; }
+.knr-compare[hidden] { display: none; }
+.knr-per100 { display: block; font-size: 12px; line-height: 20px; letter-spacing: -0.02em; color: #b5a282; margin-top: 5px; }
+.knr-per100[hidden] { display: none; }
+
+.knr-root .knr-add { margin-top: 26px; height: 48px; padding: 0 24px; font-size: 13px; font-weight: 400; line-height: 21px; letter-spacing: -0.02em; }
+.knr-add[disabled] { opacity: 0.5; cursor: not-allowed; }
+.knr-add.is-loading { opacity: 0.7; }
+.knr-stock { text-align: center; font-size: 10px; line-height: 14px; letter-spacing: -0.02em; color: var(--knr-muted); margin-top: 18px; }
+.knr-cdots { display: flex; gap: 8px; justify-content: center; margin-top: 18px; }
+.knr-cdots i { width: 34px; height: 2px; background: var(--knr-line-2); }
+.knr-cdots i.on { background: #9c9789; }
+
+/* Buy-box accordion skin (base accordion lives in knr-base.css). */
+.knr-info .knr-accordions { border-top: none; }
+.knr-info .knr-acc { border-bottom: none; border-top: 0.8px solid rgba(0, 0, 0, 0.24); padding: 20px 0; }
+.knr-info .knr-acc__head { padding: 0; font-size: 12px; line-height: 20px; }
+.knr-info .knr-acc__head svg { stroke-width: 2.2; }
+.knr-info .knr-acc__inner { padding: 8px 0 0; font-size: 12px; line-height: 20px; letter-spacing: -0.02em; }
+
+.knr-xsell { margin-top: 16px; padding-top: 8px; }
+.knr-xsell__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.knr-xsell__top h3 { font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; margin: 0; }
+.knr-xsell__top svg { width: 20px; height: 20px; }
+.knr-xsell__track { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.knr-xsell__track::-webkit-scrollbar { display: none; }
+.knr-xsell__card { flex: 0 0 46%; scroll-snap-align: start; }
+.knr-xsell__img { position: relative; display: flex; background: var(--knr-cream); aspect-ratio: 184 / 252; overflow: hidden; }
+.knr-xsell__img img { width: 100%; height: 100%; object-fit: cover; }
+.knr-xsell__plus { position: absolute; left: 10px; bottom: 10px; width: 28px; height: 28px; background: #fff; display: flex; align-items: center; justify-content: center; border-radius: 2px; color: #000; }
+.knr-xsell__plus svg { width: 15px; height: 15px; }
+.knr-xsell__meta { display: flex; flex-direction: column; gap: 3px; margin-top: 12px; font-size: 12px; }
+
+@media (min-width: 900px) {
+  .knr-pdp { position: relative; display: grid; grid-template-columns: 1fr 456px 45px; align-items: start; padding: 0 0 72px; background: #fff; }
+  .knr-gallery__rail, .knr-tags, .knr-gdots { display: none; }
+  .knr-gallery { grid-column: 1 / 4; grid-row: 1; width: 100%; }
+  .knr-media { display: block; }
+  .knr-media__cell--hero { width: 100%; height: 640px; }
+  .knr-media__row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: calc(100% - 490px); margin-top: 12px; }
+  .knr-media__row .knr-media__cell { height: 617px; }
+  .knr-info { grid-column: 2 / 3; grid-row: 1; z-index: 2; position: sticky; top: 90px; align-self: start; margin-top: 120px; border-radius: 0; padding: 40px; }
+  .knr-title { max-width: none; }
+  .knr-buytags { display: flex; }
+  .knr-xsell__card { flex: 0 0 40%; }
+}
+{% endstylesheet %}

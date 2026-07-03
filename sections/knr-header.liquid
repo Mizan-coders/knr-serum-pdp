@@ -1,0 +1,113 @@
+{%- liquid
+  assign menu = linklists[section.settings.menu]
+-%}
+
+<div class="knr-root">
+  <header class="knr-header" data-knr-header>
+    <div class="knr-wrap knr-header__in">
+      <a href="{{ routes.root_url }}" class="knr-logo">
+        {%- if section.settings.logo -%}
+          {{ section.settings.logo | image_url: width: 320 | image_tag: alt: shop.name, class: 'knr-logo__img' }}
+        {%- else -%}
+          {{ section.settings.logo_text | default: shop.name }}
+        {%- endif -%}
+      </a>
+
+      <nav class="knr-nav" aria-label="Navigation principale">
+        {%- for link in menu.links -%}
+          <a href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+        {%- endfor -%}
+      </nav>
+
+      <div class="knr-icons">
+        <a class="knr-pin" href="{{ section.settings.stores_link | default: '#' }}" aria-label="Boutiques">{% render 'knr-icon', name: 'pin' %}</a>
+        {%- if shop.customer_accounts_enabled -%}
+          <a class="knr-acct" href="{{ routes.account_url }}" aria-label="Compte">{% render 'knr-icon', name: 'account' %}</a>
+        {%- endif -%}
+        <a href="{{ routes.search_url }}" aria-label="Recherche">{% render 'knr-icon', name: 'search' %}</a>
+        <a class="knr-bag" href="{{ routes.cart_url }}" aria-label="Panier" data-knr-cart-toggle>
+          {% render 'knr-icon', name: 'bag' %}
+          <span class="knr-bag-count" data-knr-cart-count{% if cart.item_count == 0 %} hidden{% endif %}>{{ cart.item_count }}</span>
+        </a>
+        <button class="knr-burger" type="button" aria-label="Menu">{% render 'knr-icon', name: 'menu' %}</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="knr-drawer" data-knr-drawer hidden>
+    <div class="knr-drawer__backdrop" data-knr-drawer-close></div>
+    <aside class="knr-drawer__panel" role="dialog" aria-label="Panier" aria-modal="true">
+      <div class="knr-drawer__head">
+        <span>Votre panier</span>
+        <button class="knr-drawer__close" type="button" aria-label="Fermer" data-knr-drawer-close>&times;</button>
+      </div>
+      <div class="knr-drawer__body" data-knr-drawer-body></div>
+      <div class="knr-drawer__foot" data-knr-drawer-foot hidden>
+        <div class="knr-drawer__subtotal-row"><span>Sous-total</span><span data-knr-drawer-subtotal></span></div>
+        <a href="{{ routes.cart_url }}" class="knr-btn knr-btn--out">Voir le panier</a>
+        <a href="{{ routes.cart_url }}/checkout" class="knr-btn knr-btn--dark">Commander</a>
+      </div>
+    </aside>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "KNR En-tête",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo (image)" },
+    { "type": "text", "id": "logo_text", "label": "Logo (texte)", "default": "maison célestine" },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "url", "id": "stores_link", "label": "Lien boutiques" }
+  ],
+  "presets": [{ "name": "KNR En-tête" }]
+}
+{% endschema %}
+
+{% stylesheet %}
+.knr-header { position: sticky; top: 0; z-index: 40; background: linear-gradient(180deg, #d5cfac 0%, rgba(213, 207, 172, 0) 100%); transition: background 0.3s, box-shadow 0.3s; }
+.knr-header.is-stuck { background: #d5cfac; box-shadow: 0 1px 0 var(--knr-line); }
+.knr-header__in { display: flex; align-items: center; justify-content: space-between; height: var(--knr-header-h); }
+.knr-root .knr-logo { font-family: var(--knr-font-brand); font-weight: 400; font-size: 23px; letter-spacing: 0.01em; color: #fcfbfc; }
+.knr-logo__img { max-height: 20px; width: auto; }
+.knr-nav { display: none; gap: 34px; font-size: 12px; line-height: 12px; }
+.knr-nav a { color: #fff; }
+.knr-nav a:hover { opacity: 0.6; }
+.knr-icons { display: flex; align-items: center; gap: 12px; color: #fcfbfc; }
+@media (prefers-reduced-motion: reduce) {
+  .knr-header { transition: none; }
+}
+.knr-icons svg { width: 21px; height: 21px; stroke-width: 1.4; }
+.knr-icons a, .knr-icons button { display: inline-flex; color: inherit; }
+.knr-bag { position: relative; }
+.knr-bag-count { position: absolute; top: -7px; right: -8px; background: var(--knr-ink); color: #fff; font-size: 10px; font-weight: 600; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.knr-bag-count[hidden] { display: none; }
+.knr-pin, .knr-acct { display: none; }
+
+/* Cart drawer */
+.knr-drawer { position: fixed; inset: 0; z-index: 90; }
+.knr-drawer[hidden] { display: none; }
+.knr-drawer__backdrop { position: absolute; inset: 0; background: rgba(20, 18, 14, 0.4); }
+.knr-drawer__panel { position: absolute; top: 0; right: 0; height: 100%; width: 400px; max-width: 90vw; background: #fff; color: var(--knr-ink); display: flex; flex-direction: column; box-shadow: -4px 0 24px rgba(0, 0, 0, 0.12); }
+.knr-drawer__head { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid var(--knr-line); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; }
+.knr-drawer__close { font-size: 26px; line-height: 1; }
+.knr-drawer__body { flex: 1; overflow-y: auto; padding: 8px 24px; }
+.knr-drawer__item { display: grid; grid-template-columns: 60px 1fr auto; gap: 14px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--knr-line); }
+.knr-drawer__item img { width: 60px; height: 60px; object-fit: cover; background: var(--knr-cream); }
+.knr-drawer__it-title { font-size: 13px; letter-spacing: -0.02em; }
+.knr-drawer__it-variant, .knr-drawer__it-qty { font-size: 12px; color: var(--knr-muted); margin-top: 3px; }
+.knr-drawer__it-price { font-size: 13px; white-space: nowrap; }
+.knr-drawer__empty { font-size: 14px; color: var(--knr-muted); text-align: center; padding: 48px 0; }
+.knr-drawer__foot { border-top: 1px solid var(--knr-line); padding: 20px 24px; display: flex; flex-direction: column; gap: 10px; }
+.knr-drawer__foot[hidden] { display: none; }
+.knr-drawer__subtotal-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; }
+
+@media (min-width: 900px) {
+  .knr-header .knr-wrap { max-width: none; padding: 0 24px; }
+  .knr-header__in { height: 56px; }
+  .knr-logo { font-size: 24px; letter-spacing: -0.35px; }
+  .knr-nav { display: flex; }
+  .knr-icons .knr-burger { display: none; }
+  .knr-pin, .knr-acct { display: inline-flex; }
+}
+{% endstylesheet %}

@@ -1,0 +1,56 @@
+<div class="knr-root">
+  <section class="knr-trust">
+    <div class="knr-wrap">
+      <div class="knr-trust__track" data-knr-rail="trust" data-knr-drag>
+        {%- for block in section.blocks -%}
+          <div class="knr-trust__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.title != blank -%}<h4>{{ block.settings.title }}</h4>{%- endif -%}
+            {%- if block.settings.text != blank -%}<p>{{ block.settings.text }}</p>{%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+      {%- if section.blocks.size > 1 -%}
+        <div class="knr-trust__dots" data-knr-dots="trust">
+          {%- for block in section.blocks -%}<i {% if forloop.first %}class="on"{% endif %}></i>{%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "KNR Réassurance",
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Argument",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titre", "default": "Livraison offerte" },
+        { "type": "textarea", "id": "text", "label": "Texte", "default": "Livraison offerte dès 60 € d'achat en France métropolitaine." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "KNR Réassurance" }]
+}
+{% endschema %}
+
+{% stylesheet %}
+.knr-trust { background: var(--knr-bg); padding: 54px 0 50px; }
+.knr-trust__track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.knr-trust__track::-webkit-scrollbar { display: none; }
+.knr-trust__item { flex: 0 0 100%; scroll-snap-align: center; text-align: center; padding: 0 20px; }
+.knr-trust__item h4 { font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; margin-bottom: 18px; }
+.knr-trust__item p { font-size: 12px; line-height: 20px; letter-spacing: -0.02em; color: #3b382f; max-width: 30ch; margin: 0 auto; }
+.knr-trust__dots { display: flex; gap: 8px; justify-content: center; margin-top: 30px; }
+.knr-trust__dots i { width: 30px; height: 2px; background: rgba(40, 36, 28, 0.25); }
+.knr-trust__dots i.on { background: #7c776a; }
+
+@media (min-width: 900px) {
+  .knr-trust__track { overflow: visible; }
+  .knr-trust__item { flex: 0 0 25%; border-right: 1px solid rgba(40, 36, 28, 0.12); }
+  .knr-trust__item:last-child { border-right: none; }
+  .knr-trust__dots { display: none; }
+}
+{% endstylesheet %}

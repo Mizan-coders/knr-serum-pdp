@@ -1,0 +1,17 @@
+{%- comment -%}
+  Renders a merchant-chosen image, falling back to a bundled theme asset so a
+  section still looks complete before anything is uploaded.
+  Usage: {% render 'knr-image', image: section.settings.image, asset: 'knr-dropper-oil.png', alt: 'x', width: 2000 %}
+{%- endcomment -%}
+{%- liquid
+  assign w = width | default: 1200
+  assign h = height | default: w
+  assign load = loading | default: 'lazy'
+-%}
+{%- if image != blank -%}
+  {{ image | image_url: width: w | image_tag: alt: alt, class: class, loading: load, widths: widths }}
+{%- elsif asset != blank -%}
+  <img src="{{ asset | asset_url }}" alt="{{ alt | escape }}" width="{{ w }}" height="{{ h }}"{% if class %} class="{{ class }}"{% endif %} loading="{{ load }}">
+{%- else -%}
+  {{ 'image' | placeholder_svg_tag }}
+{%- endif -%}

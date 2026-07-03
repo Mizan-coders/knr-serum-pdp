@@ -1,0 +1,263 @@
+{
+  "sections": {
+    "pdp": {
+      "type": "knr-pdp",
+      "blocks": {
+        "acc_description": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Description",
+            "use_product_description": true,
+            "open": true
+          }
+        },
+        "acc_benefits": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Bienfaits",
+            "content": "<ul><li>Atténue visiblement les rides et ridules</li><li>Raffermit et redensifie la peau</li><li>Unifie le teint et ravive l'éclat</li><li>Renforce la barrière cutanée</li></ul>"
+          }
+        },
+        "acc_ingredients": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Ingrédients clés",
+            "content": "<p>Huile de rosier muscat, rétinol végétal, extrait de cactus Cactaceae et vitamine E. 97 % d'origine naturelle, certifié COSMOS ORGANIC.</p>"
+          }
+        },
+        "acc_skin": {
+          "type": "accordion",
+          "settings": {
+            "heading": "Adapté aux peaux",
+            "content": "<p>Convient à toutes les peaux, y compris les plus sensibles. Sans parfum de synthèse, testé dermatologiquement.</p>"
+          }
+        },
+        "rel_1": { "type": "related", "settings": {} },
+        "rel_2": { "type": "related", "settings": {} },
+        "rel_3": { "type": "related", "settings": {} }
+      },
+      "block_order": [
+        "acc_description",
+        "acc_benefits",
+        "acc_ingredients",
+        "acc_skin",
+        "rel_1",
+        "rel_2",
+        "rel_3"
+      ],
+      "settings": {}
+    },
+    "engagement": {
+      "type": "knr-engagement",
+      "settings": {
+        "product": "serum-precieux-regenerant"
+      }
+    },
+    "howto": {
+      "type": "knr-how-to",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "number": "01",
+            "title": "Découvrir",
+            "text": "Concentré de pureté active. Huile végétale aux propriétés anti-oxydantes puissantes pour un éclat retrouvé."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "number": "02",
+            "title": "Appliquer",
+            "text": "Éclat et uniformité retrouvés. Cible les taches et les irrégularités de grain de peau."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "number": "03",
+            "title": "Sublimer",
+            "text": "Fermeté et nutrition intense. Répare la barrière cutanée et lisse les contours du visage."
+          }
+        }
+      },
+      "block_order": ["step_1", "step_2", "step_3"],
+      "settings": { "heading": "How to use" }
+    },
+    "testimonials": {
+      "type": "knr-testimonials",
+      "blocks": {
+        "q_1": {
+          "type": "quote",
+          "settings": {
+            "name": "Clara T.",
+            "rating": 5,
+            "quote": "J'utilise ce sérum depuis trois mois et la différence est saisissante. Mes rides d'expression se sont considérablement atténuées et mon teint a retrouvé une luminosité que je n'avais plus depuis des années."
+          }
+        },
+        "q_2": {
+          "type": "quote",
+          "settings": {
+            "name": "Inès R.",
+            "rating": 5,
+            "quote": "Une huile précieuse au sens propre. Ma peau est repulpée dès le réveil, le grain affiné et l'éclat au rendez-vous. Le rituel du soir est devenu un vrai moment de soin."
+          }
+        },
+        "q_3": {
+          "type": "quote",
+          "settings": {
+            "name": "Léa D.",
+            "rating": 5,
+            "quote": "Sceptique au départ, conquise après six semaines. Les ridules sous les yeux se sont estompées et la fermeté est bien réelle. Je recommande sans hésiter."
+          }
+        }
+      },
+      "block_order": ["q_1", "q_2", "q_3"],
+      "settings": {}
+    },
+    "faq": {
+      "type": "knr-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Comment utiliser ?",
+            "answer": "<p>Appliquez 3 à 5 gouttes le soir sur visage et cou préalablement nettoyés. Massez délicatement en mouvements ascendants jusqu'à absorption complète. Peut s'utiliser seul ou sous votre crème habituelle.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Quand voir les effets ?",
+            "answer": "<p>Les premiers résultats sont visibles dès 4 semaines : teint plus lumineux et grain de peau affiné. Les effets sur la fermeté s'installent durablement après 8 à 12 semaines.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Convient-il à tous ?",
+            "answer": "<p>Oui. Sa formule sèche et non comédogène convient à toutes les peaux, y compris sensibles. Un test dans le pli du coude est recommandé en cas de réactivité connue.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Est-il naturel ?",
+            "answer": "<p>97 % de nos ingrédients sont d'origine naturelle. La formule est certifiée COSMOS ORGANIC par ECOCERT Greenlife, sans silicones ni parfum de synthèse.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "Peut-on l'associer ?",
+            "answer": "<p>Parfaitement. Appliquez-le après votre sérum aqueux et avant votre crème. Évitez l'usage simultané d'un rétinol fort le même soir pour limiter les sensibilités.</p>"
+          }
+        }
+      },
+      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4", "faq_5"],
+      "settings": {}
+    },
+    "reviews": {
+      "type": "knr-reviews",
+      "blocks": {
+        "rev_1": {
+          "type": "review",
+          "settings": {
+            "name": "Mathilde S",
+            "date": "09/02/26",
+            "rating": 5,
+            "usage": "Après usage d'1 mois",
+            "body": "<p>Une texture soyeuse qui pénètre instantanément. Ma peau est visiblement plus ferme et lumineuse après quelques semaines.</p>"
+          }
+        },
+        "rev_2": {
+          "type": "review",
+          "settings": {
+            "name": "Camille D",
+            "date": "02/02/26",
+            "rating": 5,
+            "usage": "Après usage de 2 mois",
+            "body": "<p>Le grain de peau est affiné et les ridules sous les yeux se sont estompées. Un rituel du soir devenu indispensable.</p>"
+          }
+        },
+        "rev_3": {
+          "type": "review",
+          "settings": {
+            "name": "Sophie L",
+            "date": "28/01/26",
+            "rating": 4,
+            "usage": "Après usage d'1 mois",
+            "body": "<p>Très belle huile, fine et non grasse. J'aurais aimé un flacon un peu plus généreux, mais le résultat est au rendez-vous.</p>"
+          }
+        }
+      },
+      "block_order": ["rev_1", "rev_2", "rev_3"],
+      "settings": {}
+    },
+    "news": {
+      "type": "knr-latest-news",
+      "blocks": {
+        "post_1": {
+          "type": "post",
+          "settings": {
+            "eyebrow": "L'origine",
+            "title": "Fondée en 2012 dans les Alpes",
+            "excerpt": "Maison Célestine est née de la passion d'une botaniste pour les plantes alpines et leurs propriétés régénérantes exceptionnelles."
+          }
+        },
+        "post_2": {
+          "type": "post",
+          "settings": {
+            "eyebrow": "La formule",
+            "title": "12 ingrédients actifs sélectionnés",
+            "excerpt": "Chaque ingrédient est sourcé chez des producteurs engagés : huile de rosier muscat, rétinol végétal, extrait de cactus Cactaceae."
+          }
+        },
+        "post_3": {
+          "type": "post",
+          "settings": {
+            "eyebrow": "L'expertise",
+            "title": "15 ans de recherche en laboratoire",
+            "excerpt": "Notre laboratoire indépendant teste chaque formule sur des panels de peaux diverses, garantissant efficacité et tolérance."
+          }
+        },
+        "post_4": {
+          "type": "post",
+          "settings": {
+            "eyebrow": "L'engagement",
+            "title": "97 % naturel certifié",
+            "excerpt": "Emballages recyclables, formules biodégradables, compensation carbone intégrale. Beauté responsable, du champ au flacon."
+          }
+        }
+      },
+      "block_order": ["post_1", "post_2", "post_3", "post_4"],
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "knr-newsletter",
+      "settings": {}
+    },
+    "trust": {
+      "type": "knr-trust",
+      "blocks": {
+        "t_1": { "type": "item", "settings": { "title": "Livraison offerte", "text": "Livraison offerte dès 60 € d'achat en France métropolitaine." } },
+        "t_2": { "type": "item", "settings": { "title": "Retours gratuits", "text": "Retours acceptés jusqu'à 30 jours après réception." } },
+        "t_3": { "type": "item", "settings": { "title": "Paiement sécurisé", "text": "Paiement 100 % sécurisé par carte bancaire, PayPal ou virement." } },
+        "t_4": { "type": "item", "settings": { "title": "Service client", "text": "Du lundi au vendredi de 9h à 18h par email et téléphone." } }
+      },
+      "block_order": ["t_1", "t_2", "t_3", "t_4"],
+      "settings": {}
+    }
+  },
+  "order": [
+    "pdp",
+    "engagement",
+    "howto",
+    "testimonials",
+    "faq",
+    "reviews",
+    "news",
+    "newsletter",
+    "trust"
+  ]
+}

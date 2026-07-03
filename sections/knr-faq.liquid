@@ -1,0 +1,56 @@
+<div class="knr-root">
+  <section class="knr-faq">
+    <div class="knr-wrap knr-faq__grid">
+      {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+      <div class="knr-accordions" data-knr-acc-group>
+        {%- for block in section.blocks -%}
+          <div class="knr-acc{% if forloop.first %} is-open{% endif %}" data-knr-acc {{ block.shopify_attributes }}>
+            <button class="knr-acc__head" type="button" data-knr-acc-head>
+              {{ block.settings.question }}
+              {% render 'knr-icon', name: 'chevron' %}
+            </button>
+            <div class="knr-acc__body" data-knr-acc-body>
+              <div class="knr-acc__inner">{{ block.settings.answer }}</div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "KNR FAQ",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Questions fréquentes" }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Comment utiliser ?" },
+        { "type": "richtext", "id": "answer", "label": "Réponse", "default": "<p>Appliquez 3 à 5 gouttes le soir sur visage et cou préalablement nettoyés. Massez délicatement en mouvements ascendants jusqu'à absorption complète.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "KNR FAQ" }]
+}
+{% endschema %}
+
+{% stylesheet %}
+.knr-faq { padding: 60px 0; background: #fff; }
+.knr-faq h2 { font-size: 34px; font-weight: 500; margin-bottom: 28px; }
+.knr-faq .knr-accordions { margin-top: 0; border-top: none; }
+.knr-faq .knr-acc { border-bottom: 1px solid var(--knr-line); }
+.knr-faq .knr-acc:first-child { border-top: 1px solid var(--knr-line); }
+.knr-faq .knr-acc__head { font-size: 21px; padding: 24px 2px; }
+.knr-faq .knr-acc__inner { font-size: 15px; }
+
+@media (min-width: 900px) {
+  .knr-faq h2 { font-size: 42px; text-align: center; margin-bottom: 36px; }
+  .knr-faq__grid { max-width: 720px; margin: 0 auto; }
+}
+{% endstylesheet %}

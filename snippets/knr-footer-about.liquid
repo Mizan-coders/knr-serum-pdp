@@ -1,0 +1,11 @@
+{%- comment -%} Brand / certification block, shared by the footer's mobile and desktop layouts. {%- endcomment -%}
+{%- if settings.about_heading != blank -%}<h4>{{ settings.about_heading }}</h4>{%- endif -%}
+{%- if settings.about_text != blank -%}<p>{{ settings.about_text }}</p>{%- endif -%}
+<div class="knr-foot__cosmos">
+  <div class="knr-cosmos-badge"><small>COSMÉTIQUE</small><b>BIO</b></div>
+  <div class="lbl"><b>COSMOS ORGANIC</b></div>
+</div>
+{%- if settings.cert_text != blank -%}<div class="knr-foot__cert">{{ settings.cert_text }}</div>{%- endif -%}
+{%- if settings.cert_link_label != blank -%}
+  <a href="{{ settings.cert_link | default: '#' }}" class="knr-foot__certlink"><span>{{ settings.cert_link_label }}</span></a>
+{%- endif -%}

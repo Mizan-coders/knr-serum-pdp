@@ -1,0 +1,55 @@
+<div class="knr-root">
+  <section class="knr-nl">
+    <div class="knr-wrap knr-nl__in">
+      <div class="knr-nl__img">
+        {% render 'knr-image', image: section.settings.image, asset: 'knr-routine-bundle.png', alt: section.settings.heading, width: 1200, widths: '600,900,1200' %}
+      </div>
+      <div class="knr-nl__form">
+        {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+        {%- form 'customer', class: 'knr-nl__formel' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="knr-nl__success">{{ section.settings.success_text }}</p>
+          {%- else -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <input class="knr-nl__field" type="email" name="contact[email]" placeholder="{{ section.settings.placeholder }}" required>
+            <button type="submit" class="knr-btn knr-btn--dark">{{ section.settings.button_label }}</button>
+          {%- endif -%}
+        {%- endform -%}
+        {%- if section.settings.note != blank -%}<p class="knr-nl__note">{{ section.settings.note }}</p>{%- endif -%}
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "KNR Newsletter",
+  "tag": "section",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "textarea", "id": "heading", "label": "Titre", "default": "L'alliance de la science botanique et du luxe naturel pour une peau visiblement rajeunie en 4 semaines." },
+    { "type": "text", "id": "placeholder", "label": "Champ e-mail", "default": "E-mail" },
+    { "type": "text", "id": "button_label", "label": "Bouton", "default": "S'inscrire" },
+    { "type": "text", "id": "success_text", "label": "Message de confirmation", "default": "Merci, votre inscription est confirmée." },
+    { "type": "textarea", "id": "note", "label": "Note", "default": "Formule brevetée, testée dermatologiquement, 97 % d'ingrédients d'origine naturelle." }
+  ],
+  "presets": [{ "name": "KNR Newsletter" }]
+}
+{% endschema %}
+
+{% stylesheet %}
+.knr-nl { padding: 120px 40px; border-top: 0.8px solid var(--knr-line); border-bottom: 0.8px solid var(--knr-line); background: #fff; }
+.knr-nl .knr-wrap { max-width: none; padding: 0; }
+.knr-nl__img { aspect-ratio: 1.4 / 1; overflow: hidden; margin-bottom: 36px; }
+.knr-nl__img img { width: 100%; height: 100%; object-fit: cover; }
+.knr-nl h2 { font-size: 40px; font-weight: 400; line-height: 48px; letter-spacing: -0.04em; margin-bottom: 28px; }
+.knr-nl__field { border: 1px solid var(--knr-ink); padding: 16px; font-size: 15px; width: 100%; background: transparent; margin-bottom: 14px; font-family: inherit; }
+.knr-nl__note { font-size: 12px; line-height: 20px; letter-spacing: -0.02em; color: var(--knr-muted); margin-top: 18px; }
+.knr-nl__success { font-size: 15px; color: var(--knr-ink); }
+
+@media (min-width: 900px) {
+  .knr-nl__in { display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px; align-items: center; }
+  .knr-nl__img { margin-bottom: 0; height: 540px; aspect-ratio: auto; }
+  .knr-nl__form { max-width: 420px; }
+}
+{% endstylesheet %}

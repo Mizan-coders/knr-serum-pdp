@@ -1,0 +1,116 @@
+/* ==========================================================================
+   Maison Célestine — shared foundations
+   Design tokens + primitives reused by every knr- section.
+   Everything is namespaced (knr- / --knr-*) and scoped under .knr-root so it
+   never leaks into or inherits from the underlying theme.
+   ========================================================================== */
+
+:root {
+  --knr-bg: #f5f1e9;
+  --knr-cream: #e6dcce;
+  --knr-white: #fff;
+  --knr-ink: #191712;
+  --knr-muted: #6e6a60;
+  --knr-line: #e6e0d3;
+  --knr-line-2: #d6cfbf;
+  --knr-gold: #b39a6a;
+  --knr-star: #bfa477;
+  --knr-greige: #a39d8f;
+  --knr-tan: #dcd5c3;
+  --knr-soft: #f9f8f4;
+  --knr-black: #0d0c0a;
+
+  --knr-font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --knr-font-brand: "Jost", var(--knr-font-body);
+
+  --knr-wrap: 1280px;
+  --knr-gutter: 24px;
+
+  /* Height of the header row (excludes the announcement bar), used to slide
+     the first section up behind the transparent header on the PDP. */
+  --knr-header-h: 64px;
+}
+
+/* Overlay layout: pull main up so the hero renders behind the sticky header.
+   Deterministic (no JS), so there is no layout shift. Scoped to the template. */
+.knr-overlay-layout { margin-top: calc(-1 * var(--knr-header-h)); }
+
+/* Section wrapper — establishes the type system and a local reset. */
+.knr-root {
+  font-family: var(--knr-font-body);
+  color: var(--knr-ink);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.knr-root *,
+.knr-root *::before,
+.knr-root *::after { box-sizing: border-box; }
+.knr-root img { display: block; max-width: 100%; }
+.knr-root a { color: inherit; text-decoration: none; }
+.knr-root button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Layout container. */
+.knr-wrap {
+  max-width: var(--knr-wrap);
+  margin: 0 auto;
+  padding: 0 var(--knr-gutter);
+}
+@media (min-width: 900px) {
+  :root { --knr-header-h: 56px; }
+  .knr-wrap { padding: 0 40px; }
+}
+
+/* Buttons — the extra .knr-root beats the bare `.knr-root button` reset. */
+.knr-root .knr-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  border-radius: 2px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding: 18px 24px;
+  transition: opacity 0.2s, background 0.2s;
+}
+.knr-root .knr-btn--dark { background: var(--knr-black); color: #fff; }
+.knr-root .knr-btn--dark:hover { opacity: 0.88; }
+.knr-root .knr-btn--out {
+  background: transparent;
+  color: var(--knr-ink);
+  border: 1px solid var(--knr-ink);
+}
+.knr-root .knr-btn--out:hover { background: rgba(0, 0, 0, 0.04); }
+
+/* Star rating. */
+.knr-stars { display: inline-flex; gap: 2px; color: var(--knr-star); line-height: 0; }
+.knr-stars svg { width: 15px; height: 15px; }
+.knr-stars svg .knr-star-empty { fill: none; stroke: currentColor; stroke-width: 1.3; }
+
+/* Shared editorial paragraph. */
+.knr-p {
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+
+/* Accordion — shared by the buy-box and the FAQ (each adds its own skin). */
+.knr-accordions { margin-top: 30px; border-top: 1px solid var(--knr-line); }
+.knr-acc { border-bottom: 1px solid var(--knr-line); }
+.knr-acc__head { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 22px 2px; font-weight: 400; font-size: 11px; line-height: 16px; text-align: left; }
+.knr-acc__head svg { width: 18px; height: 18px; transition: transform 0.3s; flex: none; }
+.knr-acc.is-open .knr-acc__head svg { transform: rotate(180deg); }
+.knr-acc__body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+.knr-acc__inner { padding: 0 2px 24px; font-size: 15px; line-height: 1.65; color: #4a463d; }
+.knr-acc__inner ul { margin: 0; padding-left: 18px; }
+.knr-acc__inner li { margin-bottom: 7px; }

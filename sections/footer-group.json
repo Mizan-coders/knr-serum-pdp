@@ -1,0 +1,31 @@
+{
+  "name": "Footer",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "knr-footer",
+      "blocks": {
+        "col_discover": {
+          "type": "menu",
+          "settings": { "heading": "Découvrir", "menu": "footer" }
+        },
+        "col_service": {
+          "type": "menu",
+          "settings": { "heading": "Service client", "menu": "footer" }
+        },
+        "col_legal": {
+          "type": "menu",
+          "settings": { "heading": "Légal & Transparence", "menu": "footer" }
+        }
+      },
+      "block_order": ["col_discover", "col_service", "col_legal"],
+      "settings": {
+        "instagram": "https://instagram.com",
+        "facebook": "https://facebook.com",
+        "tiktok": "https://tiktok.com",
+        "linkedin": "https://linkedin.com"
+      }
+    }
+  },
+  "order": ["footer"]
+}

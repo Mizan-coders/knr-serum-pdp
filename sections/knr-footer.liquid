@@ -1,0 +1,142 @@
+{%- liquid
+  assign menu_blocks = section.blocks | where: 'type', 'menu'
+-%}
+
+<div class="knr-root">
+  <footer class="knr-foot">
+    <div class="knr-wrap">
+      {%- comment -%} Mobile: collapsible menu columns {%- endcomment -%}
+      {%- for block in menu_blocks -%}
+        {%- assign menu = linklists[block.settings.menu] -%}
+        <div class="knr-foot__acc" data-knr-acc {{ block.shopify_attributes }}>
+          <button class="knr-foot__acchead" type="button" data-knr-acc-head>
+            {{ block.settings.heading | default: menu.title }}
+            {% render 'knr-icon', name: 'chevron' %}
+          </button>
+          <div class="knr-foot__accbody" data-knr-acc-body>
+            <div class="knr-foot__accinner">
+              {%- for link in menu.links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+
+      {%- comment -%} Desktop: menu columns + about {%- endcomment -%}
+      <div class="knr-foot__cols">
+        {%- for block in menu_blocks -%}
+          {%- assign menu = linklists[block.settings.menu] -%}
+          <div class="knr-foot__col">
+            <h4>{{ block.settings.heading | default: menu.title }}</h4>
+            <ul>
+              {%- for link in menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}
+            </ul>
+          </div>
+        {%- endfor -%}
+        <div class="knr-foot__col knr-foot__about knr-foot__about--desk">
+          {% render 'knr-footer-about', settings: section.settings %}
+        </div>
+      </div>
+
+      {%- comment -%} Mobile about {%- endcomment -%}
+      <div class="knr-foot__about knr-foot__about--mob">
+        {% render 'knr-footer-about', settings: section.settings %}
+      </div>
+
+      {%- if section.settings.wordmark != blank -%}
+        <div class="knr-foot__word">{{ section.settings.wordmark }}</div>
+      {%- endif -%}
+
+      <div class="knr-foot__bottom">
+        <div class="knr-foot__selects">
+          <span>{{ localization.country.name }} ({{ localization.country.currency.iso_code }}) {% render 'knr-icon', name: 'chevron' %}</span>
+          <span>{{ localization.language.endonym_name | capitalize }} {% render 'knr-icon', name: 'chevron' %}</span>
+        </div>
+        <div class="knr-foot__copy">© {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ section.settings.rights_text }}</div>
+        <div class="knr-foot__social">
+          {%- if section.settings.facebook != blank -%}<a href="{{ section.settings.facebook }}" aria-label="Facebook">{% render 'knr-icon', name: 'facebook' %}</a>{%- endif -%}
+          {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" aria-label="Instagram">{% render 'knr-icon', name: 'instagram' %}</a>{%- endif -%}
+          {%- if section.settings.tiktok != blank -%}<a href="{{ section.settings.tiktok }}" aria-label="TikTok">{% render 'knr-icon', name: 'tiktok' %}</a>{%- endif -%}
+          {%- if section.settings.linkedin != blank -%}<a href="{{ section.settings.linkedin }}" aria-label="LinkedIn">{% render 'knr-icon', name: 'linkedin' %}</a>{%- endif -%}
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+{% schema %}
+{
+  "name": "KNR Pied de page",
+  "settings": [
+    { "type": "header", "content": "À propos" },
+    { "type": "text", "id": "about_heading", "label": "Titre", "default": "À propos de Maison Célestine" },
+    { "type": "textarea", "id": "about_text", "label": "Texte", "default": "Maison Célestine est une marque de soins anti-âge haut de gamme formulés à partir d'ingrédients d'origine naturelle soigneusement sélectionnés." },
+    { "type": "text", "id": "cert_text", "label": "Certification", "default": "Certifié COSMOS ORGANIC par ECOCERT Greenlife" },
+    { "type": "text", "id": "cert_link_label", "label": "Lien certificat", "default": "Voir le certificat" },
+    { "type": "url", "id": "cert_link", "label": "URL certificat" },
+    { "type": "header", "content": "Bas de page" },
+    { "type": "text", "id": "wordmark", "label": "Signature", "default": "maison célestine" },
+    { "type": "text", "id": "rights_text", "label": "Mentions", "default": "Tous droits réservés." },
+    { "type": "header", "content": "Réseaux sociaux" },
+    { "type": "url", "id": "facebook", "label": "Facebook" },
+    { "type": "url", "id": "instagram", "label": "Instagram" },
+    { "type": "url", "id": "tiktok", "label": "TikTok" },
+    { "type": "url", "id": "linkedin", "label": "LinkedIn" }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Colonne de menu",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Titre" },
+        { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "KNR Pied de page" }]
+}
+{% endschema %}
+
+{% stylesheet %}
+.knr-foot { background: var(--knr-bg); padding: 40px 0 0; }
+.knr-foot__acc { border-top: 1px solid var(--knr-line); }
+.knr-foot__acchead { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 22px 2px; font-size: 16px; border-bottom: 1px solid var(--knr-line); }
+.knr-foot__acchead svg { width: 18px; height: 18px; transition: transform 0.3s; }
+.knr-foot__acc.is-open .knr-foot__acchead svg { transform: rotate(180deg); }
+.knr-foot__accbody { max-height: 0; overflow: hidden; transition: max-height 0.35s; }
+.knr-foot__accinner { padding: 4px 2px 20px; display: flex; flex-direction: column; gap: 14px; font-size: 15px; color: #46433b; }
+.knr-foot__cols { display: none; }
+.knr-foot__about { padding: 30px 2px 0; }
+.knr-foot__about--desk { display: none; }
+.knr-foot__about h4 { font-size: 15px; font-weight: 500; margin-bottom: 16px; }
+.knr-foot__about p { font-size: 12px; line-height: 20px; letter-spacing: -0.02em; color: #46433b; max-width: 52ch; }
+.knr-foot__cosmos { display: flex; flex-direction: column; gap: 12px; margin-top: 26px; }
+.knr-cosmos-badge { width: 74px; height: 74px; border-radius: 50%; border: 1.5px solid var(--knr-ink); display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; line-height: 1.1; }
+.knr-cosmos-badge b { font-size: 13px; }
+.knr-cosmos-badge small { font-size: 7px; letter-spacing: 0.08em; }
+.knr-foot__cosmos .lbl b { font-size: 13px; display: block; }
+.knr-foot__cert { font-size: 12px; line-height: 20px; letter-spacing: -0.02em; color: #46433b; margin-top: 24px; }
+.knr-foot__certlink { display: inline-block; margin-top: 22px; padding-top: 22px; border-top: 1px solid var(--knr-line); font-size: 15px; }
+.knr-foot__certlink span { border-bottom: 1px solid var(--knr-ink); padding-bottom: 2px; }
+.knr-foot__word { font-family: var(--knr-font-brand); font-weight: 400; font-size: 21vw; letter-spacing: -0.01em; line-height: 0.9; white-space: nowrap; margin: 30px 0 0; color: var(--knr-ink); overflow: hidden; }
+.knr-foot__bottom { border-top: 1px solid var(--knr-line); margin-top: 24px; padding: 22px 0 30px; text-align: center; }
+.knr-foot__selects { display: flex; gap: 26px; justify-content: center; font-size: 14px; margin-bottom: 14px; }
+.knr-foot__selects span { display: inline-flex; align-items: center; gap: 6px; }
+.knr-foot__selects svg { width: 14px; height: 14px; }
+.knr-foot__copy { font-size: 13px; color: var(--knr-muted); }
+.knr-foot__social { display: flex; gap: 24px; justify-content: center; margin-top: 18px; }
+.knr-foot__social svg { width: 18px; height: 18px; }
+
+@media (min-width: 900px) {
+  .knr-foot__acc { display: none; }
+  .knr-foot__cols { display: grid; grid-template-columns: repeat(3, 1fr) 1.4fr; gap: 40px; border-top: 1px solid var(--knr-line); padding-top: 44px; }
+  .knr-foot__col h4 { font-size: 15px; font-weight: 500; margin-bottom: 20px; }
+  .knr-foot__col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; font-size: 15px; color: #46433b; }
+  .knr-foot__col a:hover { opacity: 0.6; }
+  .knr-foot__about--desk { display: block; padding: 0; }
+  .knr-foot__about--mob { display: none; }
+  .knr-foot__word { font-size: 178px; text-align: center; margin-top: 40px; }
+  .knr-foot__bottom { display: flex; justify-content: space-between; align-items: center; }
+  .knr-foot__selects { margin-bottom: 0; }
+  .knr-foot__social { margin-top: 0; }
+}
+{% endstylesheet %}

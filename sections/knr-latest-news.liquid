@@ -1,0 +1,125 @@
+{%- liquid
+  assign blog = blogs[section.settings.blog]
+  assign limit = section.settings.post_limit
+  assign use_blog = false
+  if section.settings.blog != blank and blog.articles.size > 0
+    assign use_blog = true
+  endif
+-%}
+
+<div class="knr-root">
+  <section class="knr-news">
+    <div class="knr-wrap">
+      <div class="knr-news__top">
+        {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
+        {%- if section.settings.link_label != blank -%}
+          <a href="{{ blog.url | default: routes.root_url }}" class="knr-link-ul">{{ section.settings.link_label }}</a>
+        {%- endif -%}
+      </div>
+
+      <div class="knr-news__track" data-knr-rail="news" data-knr-drag>
+        {%- if use_blog -%}
+          {%- for article in blog.articles limit: limit -%}
+            <article class="knr-art">
+              <a class="knr-art__img" href="{{ article.url }}">
+                {%- if article.image -%}
+                  {{ article.image | image_url: width: 680 | image_tag: alt: article.title, widths: '340,500,680', loading: 'lazy' }}
+                {%- else -%}
+                  {{ 'image' | placeholder_svg_tag }}
+                {%- endif -%}
+              </a>
+              <div class="knr-art__body">
+                {%- if article.tags.size > 0 -%}<span class="knr-art__eye">{{ article.tags.first }}</span>{%- endif -%}
+                <div class="knr-art__tw">
+                  <h3 class="knr-art__t"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+                  <p class="knr-art__d">{{ article.excerpt_or_content | strip_html | truncatewords: 28 }}</p>
+                </div>
+              </div>
+            </article>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for block in section.blocks -%}
+            {%- liquid
+              case forloop.index
+                when 1
+                  assign fallback = 'knr-gallery-hand.png'
+                when 2
+                  assign fallback = 'knr-gallery-roses.png'
+                when 3
+                  assign fallback = 'knr-dropper-oil.png'
+                else
+                  assign fallback = 'knr-editorial-face.png'
+              endcase
+            -%}
+            <article class="knr-art" {{ block.shopify_attributes }}>
+              <a class="knr-art__img" href="{{ block.settings.link | default: '#' }}">
+                {% render 'knr-image', image: block.settings.image, asset: fallback, alt: block.settings.title, width: 680, widths: '340,500,680' %}
+              </a>
+              <div class="knr-art__body">
+                {%- if block.settings.eyebrow != blank -%}<span class="knr-art__eye">{{ block.settings.eyebrow }}</span>{%- endif -%}
+                <div class="knr-art__tw">
+                  <h3 class="knr-art__t"><a href="{{ block.settings.link | default: '#' }}">{{ block.settings.title }}</a></h3>
+                  {%- if block.settings.excerpt != blank -%}<p class="knr-art__d">{{ block.settings.excerpt }}</p>{%- endif -%}
+                </div>
+              </div>
+            </article>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "KNR Actualités",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Latest news" },
+    { "type": "text", "id": "link_label", "label": "Lien", "default": "Voir tous les articles" },
+    { "type": "paragraph", "content": "Sélectionnez un blog pour afficher automatiquement ses derniers articles. Sinon, les articles ci-dessous sont utilisés." },
+    { "type": "blog", "id": "blog", "label": "Blog (optionnel)" },
+    { "type": "range", "id": "post_limit", "label": "Nombre d'articles", "min": 2, "max": 8, "step": 1, "default": 4 }
+  ],
+  "blocks": [
+    {
+      "type": "post",
+      "name": "Article",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "eyebrow", "label": "Sur-titre", "default": "L'origine" },
+        { "type": "text", "id": "title", "label": "Titre", "default": "Fondée en 2012 dans les Alpes" },
+        { "type": "textarea", "id": "excerpt", "label": "Extrait", "default": "Maison Célestine est née de la passion d'une botaniste pour les plantes alpines et leurs propriétés régénérantes exceptionnelles." },
+        { "type": "url", "id": "link", "label": "Lien" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [{ "name": "KNR Actualités" }]
+}
+{% endschema %}
+
+{% stylesheet %}
+.knr-news { padding: 56px 0 62px; background: #fff; }
+.knr-news .knr-wrap { display: flex; flex-direction: column; gap: 40px; max-width: none; }
+.knr-news__top { display: flex; justify-content: space-between; align-items: baseline; }
+.knr-news h2 { font-size: 34px; font-weight: 500; line-height: 1.1; margin: 0; }
+.knr-link-ul { font-size: 14px; border-bottom: 1px solid currentColor; padding-bottom: 3px; }
+.knr-news__track { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.knr-news__track::-webkit-scrollbar { display: none; }
+.knr-art { flex: 0 0 80%; max-width: 340px; scroll-snap-align: start; display: flex; flex-direction: column; gap: 16px; }
+.knr-art__img { aspect-ratio: 1 / 1; overflow: hidden; background: var(--knr-cream); }
+.knr-art__img img { width: 100%; height: 100%; object-fit: cover; }
+.knr-art__body { display: flex; flex-direction: column; gap: 40px; padding-right: 15px; border-bottom: 1px solid #cfc8b9; }
+.knr-art__tw { display: flex; flex-direction: column; gap: 8px; }
+.knr-art__eye { font-size: 13px; color: #4a463d; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; align-self: flex-start; }
+.knr-art__eye::after { content: ""; width: 16px; height: 0.8px; background: #b5a282; }
+.knr-art__t { font-size: 24px; font-weight: 400; line-height: 32px; letter-spacing: -0.02em; margin: 0; }
+.knr-art__d { font-size: 14px; line-height: 22px; letter-spacing: -0.02em; color: #4a463d; margin: 0; }
+
+@media (min-width: 900px) {
+  .knr-news h2 { font-size: 42px; }
+  .knr-art { flex: 0 0 calc((100% - 24px) / 4); max-width: none; }
+  .knr-art__body { border-bottom: none; }
+}
+{% endstylesheet %}
