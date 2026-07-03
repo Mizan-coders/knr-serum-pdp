@@ -5,7 +5,7 @@
   {%- if settings.cosmos_logo != blank -%}
     {{ settings.cosmos_logo | image_url: width: 200 | image_tag: alt: 'Cosmos Organic', class: 'knr-cosmos-logo', widths: '100,200' }}
   {%- else -%}
-    <img class="knr-cosmos-logo" src="{{ 'Calque_1.png' | asset_url }}" alt="Cosmos Organic — Cosmétique Bio" width="47" height="56">
+    <img class="knr-cosmos-logo" src="{{ 'logo-footer.png' | asset_url }}" alt="Cosmos Organic — Cosmétique Bio" width="500" height="500">
   {%- endif -%}
 </div>
 {%- if settings.cert_text != blank -%}<div class="knr-foot__cert">{{ settings.cert_text }}</div>{%- endif -%}
