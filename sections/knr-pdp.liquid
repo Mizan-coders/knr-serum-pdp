@@ -271,7 +271,7 @@
 .knr-info { background: var(--knr-card-bg, #fff); border-radius: 0; margin: -22px 16px 0; position: relative; padding: 34px 16px 8px; }
 .knr-info__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
 .knr-title { font-size: 24px; line-height: 32px; letter-spacing: -0.02em; text-transform: uppercase; font-weight: 400; color: #000; max-width: 62%; margin: 0; }
-.knr-crumb { display: flex; gap: 6px; align-items: center; font-size: 10px; line-height: 14px; letter-spacing: -0.02em; color: #b5a282; margin-bottom: 25px; }
+.knr-crumb { display: none; gap: 6px; align-items: center; font-size: 10px; line-height: 14px; letter-spacing: -0.02em; color: #b5a282; margin-bottom: 25px; }
 .knr-crumb a:hover { opacity: 0.7; }
 .knr-buytags { display: none; gap: 4px; margin-bottom: 16px; }
 .knr-buytags .knr-tag { background: transparent; border: 1px solid var(--knr-line-2); color: #000; height: 22px; padding: 0 12px; display: inline-flex; align-items: center; }
@@ -342,6 +342,7 @@
   .knr-info { grid-column: 2 / 3; grid-row: 1; z-index: 2; position: sticky; top: 90px; align-self: start; margin: 120px 0 0; border-radius: 0; padding: 40px; background: var(--knr-card-bg, #fff); }
   .knr-title { max-width: none; }
   .knr-buytags { display: flex; }
+  .knr-crumb { display: flex; }
   .knr-headrate { display: flex; }
   .knr-headprice, .knr-ratingline { display: none; }
   .knr-price-wrap { display: block; }
