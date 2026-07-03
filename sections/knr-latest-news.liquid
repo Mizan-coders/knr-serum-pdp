@@ -13,7 +13,7 @@
       <div class="knr-news__top">
         {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
         {%- if section.settings.link_label != blank -%}
-          <a href="{{ blog.url | default: routes.root_url }}" class="knr-link-ul">{{ section.settings.link_label }}</a>
+          <a href="{{ blog.url | default: routes.root_url }}" class="knr-link-ul knr-news__all--desk">{{ section.settings.link_label }}</a>
         {%- endif -%}
       </div>
 
@@ -64,6 +64,19 @@
               </div>
             </article>
           {%- endfor -%}
+        {%- endif -%}
+      </div>
+
+      <div class="knr-news__foot">
+        <div class="knr-news__dots" data-knr-dots="news">
+          {%- if use_blog -%}
+            {%- for article in blog.articles limit: limit -%}<i {% if forloop.first %}class="on"{% endif %}></i>{%- endfor -%}
+          {%- else -%}
+            {%- for block in section.blocks -%}<i {% if forloop.first %}class="on"{% endif %}></i>{%- endfor -%}
+          {%- endif -%}
+        </div>
+        {%- if section.settings.link_label != blank -%}
+          <a href="{{ blog.url | default: routes.root_url }}" class="knr-link-ul knr-news__all--mob">{{ section.settings.link_label }}</a>
         {%- endif -%}
       </div>
     </div>
@@ -117,10 +130,18 @@
 .knr-art__eye::after { content: ""; width: 16px; height: 0.8px; background: #b5a282; }
 .knr-art__t { font-size: 24px; font-weight: 400; line-height: 32px; letter-spacing: -0.02em; margin: 0; }
 .knr-art__d { font-size: 14px; line-height: 22px; letter-spacing: -0.02em; color: #4a463d; margin: 0; }
+.knr-news__foot { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.knr-news__dots { display: flex; gap: 7px; justify-content: center; }
+.knr-news__dots i { width: 30px; height: 2px; background: var(--knr-line-2); }
+.knr-news__dots i.on { background: var(--knr-ink); }
+.knr-news__all--desk { display: none; }
+.knr-news__all--mob { display: inline-block; }
 
 @media (min-width: 900px) {
   .knr-news h2 { font-size: 42px; }
   .knr-art { flex: 0 0 calc((100% - 24px) / 4); max-width: none; }
   .knr-art__body { border-bottom: none; }
+  .knr-news__all--desk { display: inline-block; }
+  .knr-news__foot { display: none; }
 }
 {% endstylesheet %}
