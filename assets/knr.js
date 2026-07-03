@@ -203,24 +203,29 @@
     });
   }
 
-  /* Horizontal rail — reflects scroll position onto a set of pager dots. */
+  /* Horizontal rail — pager dots reflect scroll position and are clickable. */
   function initRails() {
     $$('[data-knr-rail]').forEach(function (rail) {
       var dotsHost = $('[data-knr-dots="' + rail.dataset.knrRail + '"]') ||
         (rail.parentElement && $('[data-knr-dots]', rail.parentElement));
       var next = $('[data-knr-rail-next="' + rail.dataset.knrRail + '"]');
+      var slide = function () { return rail.scrollWidth / rail.children.length; };
 
       if (dotsHost) {
         var dots = $$('i', dotsHost);
+        dots.forEach(function (dot, i) {
+          dot.style.cursor = 'pointer';
+          dot.addEventListener('click', function () { rail.scrollTo({ left: slide() * i, behavior: 'smooth' }); });
+        });
         rail.addEventListener('scroll', function () {
-          var per = rail.scrollWidth / rail.children.length;
-          var i = Math.min(Math.round(rail.scrollLeft / per), dots.length - 1);
+          var i = Math.min(Math.round(rail.scrollLeft / slide()), dots.length - 1);
           dots.forEach(function (d, k) { d.classList.toggle('on', k === i); });
         }, { passive: true });
       }
       if (next) {
         next.addEventListener('click', function () {
-          rail.scrollBy({ left: rail.clientWidth * 0.7, behavior: 'smooth' });
+          var i = Math.round(rail.scrollLeft / slide()) + 1;
+          rail.scrollTo({ left: slide() * i, behavior: 'smooth' });
         });
       }
     });
