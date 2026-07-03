@@ -48,8 +48,32 @@
 
       <div class="knr-foot__bottom">
         <div class="knr-foot__selects">
-          <span>{{ localization.country.name }} ({{ localization.country.currency.iso_code }}) {% render 'knr-icon', name: 'chevron' %}</span>
-          <span>{{ localization.language.endonym_name | capitalize }} {% render 'knr-icon', name: 'chevron' %}</span>
+          {%- if localization.available_countries.size > 0 -%}
+            {%- form 'localization', class: 'knr-foot__loc' -%}
+              <input type="hidden" name="return_to" value="{{ request.path }}">
+              <label class="knr-foot__locfield">
+                <select name="country_code" data-knr-loc aria-label="Pays / devise">
+                  {%- for country in localization.available_countries -%}
+                    <option value="{{ country.iso_code }}"{% if country.iso_code == localization.country.iso_code %} selected{% endif %}>{{ country.name }} ({{ country.currency.iso_code }})</option>
+                  {%- endfor -%}
+                </select>
+                {% render 'knr-icon', name: 'chevron' %}
+              </label>
+            {%- endform -%}
+          {%- endif -%}
+          {%- if localization.available_languages.size > 0 -%}
+            {%- form 'localization', class: 'knr-foot__loc' -%}
+              <input type="hidden" name="return_to" value="{{ request.path }}">
+              <label class="knr-foot__locfield">
+                <select name="locale_code" data-knr-loc aria-label="Langue">
+                  {%- for language in localization.available_languages -%}
+                    <option value="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} selected{% endif %}>{{ language.endonym_name | capitalize }}</option>
+                  {%- endfor -%}
+                </select>
+                {% render 'knr-icon', name: 'chevron' %}
+              </label>
+            {%- endform -%}
+          {%- endif -%}
         </div>
         <div class="knr-foot__copy">© {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ section.settings.rights_text }}</div>
         <div class="knr-foot__social">
@@ -97,7 +121,7 @@
 {% endschema %}
 
 {% stylesheet %}
-.knr-foot { background: #fff; padding: 40px 0 0; }
+.knr-foot { background: #fff; padding: 40px 0 0; overflow-x: clip; }
 .knr-foot__acc { border-top: 1px solid var(--knr-line); }
 .knr-foot__acchead { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 22px 2px; font-size: 16px; border-bottom: 1px solid var(--knr-line); }
 .knr-foot__acchead svg { width: 18px; height: 18px; transition: transform 0.3s; }
@@ -120,8 +144,10 @@
 .knr-foot__word { font-family: var(--knr-font-brand); font-weight: 400; font-size: 21vw; letter-spacing: -0.01em; line-height: 0.9; white-space: nowrap; margin: 30px 0 0; color: var(--knr-ink); overflow: hidden; }
 .knr-foot__bottom { border-top: 1px solid var(--knr-line); margin-top: 24px; padding: 22px 0 30px; text-align: center; }
 .knr-foot__selects { display: flex; gap: 26px; justify-content: center; font-size: 14px; margin-bottom: 14px; }
-.knr-foot__selects span { display: inline-flex; align-items: center; gap: 6px; }
-.knr-foot__selects svg { width: 14px; height: 14px; }
+.knr-foot__loc { margin: 0; }
+.knr-foot__locfield { position: relative; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.knr-foot__locfield select { appearance: none; -webkit-appearance: none; font: inherit; color: inherit; background: none; border: none; padding: 0; margin: 0; cursor: pointer; }
+.knr-foot__locfield svg { width: 14px; height: 14px; pointer-events: none; }
 .knr-foot__copy { font-size: 13px; color: var(--knr-muted); }
 .knr-foot__social { display: flex; gap: 24px; justify-content: center; margin-top: 18px; }
 .knr-foot__social svg { width: 18px; height: 18px; }
@@ -134,7 +160,15 @@
   .knr-foot__col a:hover { opacity: 0.6; }
   .knr-foot__about--desk { display: block; padding: 0; }
   .knr-foot__about--mob { display: none; }
-  .knr-foot__word { font-size: min(13vw, 172px); text-align: center; margin-top: 40px; }
+  /* Full-bleed wordmark: spans the viewport with a 40px gutter each side,
+     sized fluidly so the text fills the available width. */
+  .knr-foot__word {
+    margin: 40px calc(50% - 50vw) 0;
+    padding: 0 40px;
+    box-sizing: border-box;
+    font-size: calc(14.6vw - 12px);
+    text-align: center;
+  }
   .knr-foot__bottom { display: flex; justify-content: space-between; align-items: center; }
   .knr-foot__selects { margin-bottom: 0; }
   .knr-foot__social { margin-top: 0; }

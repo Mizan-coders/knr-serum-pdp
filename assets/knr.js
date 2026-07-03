@@ -339,7 +339,15 @@
     });
   }
 
+  /* Country/currency + language selectors submit their localization form on change. */
+  function initLocalization() {
+    $$('[data-knr-loc]').forEach(function (sel) {
+      sel.addEventListener('change', function () { if (sel.form) sel.form.submit(); });
+    });
+  }
+
   function init() {
+    initLocalization();
     initHeader();
     initAccordions();
     initVariantPicker();
