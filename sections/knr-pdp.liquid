@@ -268,7 +268,7 @@
 .knr-lightbox__img { max-width: 92vw; max-height: 92vh; object-fit: contain; }
 .knr-lightbox__close { position: absolute; top: 20px; right: 26px; width: 40px; height: 40px; color: #fff; font-size: 30px; line-height: 1; background: none; border: none; cursor: pointer; }
 
-.knr-info { background: var(--knr-card-bg, #fff); border-radius: 0; margin: -22px 16px 0; position: relative; padding: 34px 16px 8px; }
+.knr-info { background: var(--knr-card-bg, #fff); border-radius: 0; margin: -22px 16px 0; position: relative; padding: 34px 16px 16px; }
 .knr-info__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
 .knr-title { font-size: 24px; line-height: 32px; letter-spacing: -0.02em; text-transform: uppercase; font-weight: 400; color: #000; max-width: 56%; margin: 0; }
 .knr-crumb { display: none; gap: 6px; align-items: center; font-size: 10px; line-height: 14px; letter-spacing: -0.02em; color: #b5a282; margin-bottom: 25px; }
@@ -324,11 +324,11 @@
 .knr-xsell__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
 .knr-xsell__top h3 { font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; margin: 0; }
 .knr-xsell__top svg { width: 20px; height: 20px; }
-.knr-xsell__track { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.knr-xsell__track { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-right: -16px; }
 .knr-xsell__track::-webkit-scrollbar { display: none; }
-.knr-xsell__card { flex: 0 0 46%; scroll-snap-align: start; }
-.knr-xsell__img { position: relative; display: flex; background: var(--knr-cream); aspect-ratio: 184 / 252; overflow: hidden; }
-.knr-xsell__img img { width: 100%; height: 100%; object-fit: cover; }
+.knr-xsell__card { flex: 0 0 159px; scroll-snap-align: start; }
+.knr-xsell__img { position: relative; display: flex; background: var(--knr-cream); aspect-ratio: 159 / 252; overflow: hidden; }
+.knr-xsell__img img { width: 100%; height: 100%; object-fit: cover; object-position: 34% 45%; }
 .knr-xsell__plus { position: absolute; left: 10px; bottom: 10px; width: 28px; height: 28px; background: #fff; display: flex; align-items: center; justify-content: center; border-radius: 2px; color: #000; }
 .knr-xsell__plus svg { width: 15px; height: 15px; }
 .knr-xsell__meta { display: flex; flex-direction: column; gap: 3px; margin-top: 12px; font-size: 12px; }
@@ -352,5 +352,8 @@
   .knr-size__btn { flex: 0 1 auto; padding-bottom: 6px; border-bottom-width: 1.5px; }
   .knr-size__btn.is-active { border-bottom-width: 1.5px; }
   .knr-xsell__card { flex: 0 0 40%; }
+  .knr-xsell__track { margin-right: 0; }
+  .knr-xsell__img { aspect-ratio: 184 / 252; }
+  .knr-xsell__img img { object-position: center; }
 }
 {% endstylesheet %}
