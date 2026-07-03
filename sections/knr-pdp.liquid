@@ -84,6 +84,14 @@
           {% render 'knr-stars', rating: section.settings.rating %}
           <span class="knr-headrate__n">{{ section.settings.rating }} · {{ section.settings.review_count }} avis</span>
         </div>
+        <div class="knr-headprice">
+          <span class="knr-price" data-knr-price>{{ current_variant.price | money }}</span><span class="knr-compare" data-knr-compare{% unless current_variant.compare_at_price > current_variant.price %} hidden{% endunless %}>{{ current_variant.compare_at_price | money }}</span>
+          <span class="knr-per100" data-knr-unit{% unless current_variant.unit_price_measurement %} hidden{% endunless %}>{%- if current_variant.unit_price_measurement -%}{{ current_variant.unit_price | money }} par {{ current_variant.unit_price_measurement.reference_value }}{{ current_variant.unit_price_measurement.reference_unit }}{%- endif -%}</span>
+        </div>
+      </div>
+      <div class="knr-ratingline">
+        {% render 'knr-stars', rating: section.settings.rating %}
+        <span class="knr-headrate__n">{{ section.settings.rating }} · {{ section.settings.review_count }} avis</span>
       </div>
 
       {%- if section.settings.certs != blank -%}
@@ -267,10 +275,16 @@
 .knr-crumb a:hover { opacity: 0.7; }
 .knr-buytags { display: none; gap: 4px; margin-bottom: 16px; }
 .knr-buytags .knr-tag { background: transparent; border: 1px solid var(--knr-line-2); color: #000; height: 22px; padding: 0 12px; display: inline-flex; align-items: center; }
-.knr-headrate { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; white-space: nowrap; padding-top: 4px; }
+.knr-headrate { display: none; flex-direction: column; align-items: flex-end; gap: 4px; white-space: nowrap; padding-top: 4px; }
 .knr-headrate .knr-stars { gap: 4px; }
 .knr-headrate .knr-stars svg { width: 12px; height: 12px; }
 .knr-headrate__n { font-size: 10px; line-height: 14px; letter-spacing: -0.02em; color: #e2d3bb; }
+/* Mobile: price sits top-right by the title, rating drops below. */
+.knr-headprice { text-align: right; white-space: nowrap; padding-top: 4px; }
+.knr-headprice .knr-per100 { margin-top: 4px; }
+.knr-ratingline { display: flex; align-items: center; gap: 8px; margin-top: 12px; }
+.knr-ratingline .knr-stars { gap: 4px; }
+.knr-ratingline .knr-stars svg { width: 13px; height: 13px; }
 .knr-certs { margin-top: 18px; font-size: 12px; line-height: 20px; letter-spacing: -0.02em; font-weight: 400; color: #3b382f; }
 .knr-certs p { margin: 0; }
 .knr-certs strong { font-weight: 700; }
@@ -282,7 +296,7 @@
 .knr-size__btn { padding: 0 0 6px; font-size: 12px; line-height: 20px; letter-spacing: -0.02em; color: #86827a; border-bottom: 1.5px solid transparent; transition: 0.2s; }
 .knr-size__btn.is-active { color: #000; border-bottom: 1.5px solid var(--knr-ink); }
 
-.knr-price-wrap { text-align: left; white-space: nowrap; margin-top: 20px; }
+.knr-price-wrap { display: none; text-align: left; white-space: nowrap; margin-top: 20px; }
 .knr-price { font-size: 24px; line-height: 32px; letter-spacing: -0.02em; color: #000; }
 .knr-compare { font-size: 12px; line-height: 20px; letter-spacing: -0.02em; color: rgba(0, 0, 0, 0.24); text-decoration: line-through; margin-left: 8px; }
 .knr-compare[hidden] { display: none; }
@@ -328,6 +342,9 @@
   .knr-info { grid-column: 2 / 3; grid-row: 1; z-index: 2; position: sticky; top: 90px; align-self: start; margin-top: 120px; border-radius: 0; padding: 40px; }
   .knr-title { max-width: none; }
   .knr-buytags { display: flex; }
+  .knr-headrate { display: flex; }
+  .knr-headprice, .knr-ratingline { display: none; }
+  .knr-price-wrap { display: block; }
   .knr-xsell__card { flex: 0 0 40%; }
 }
 {% endstylesheet %}

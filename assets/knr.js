@@ -71,9 +71,9 @@
     $$('[data-knr-variants]').forEach(function (group) {
       var buttons = $$('[data-knr-variant]', group);
       var scope = group.closest('[data-knr-buybox]') || document;
-      var priceEl = $('[data-knr-price]', scope);
-      var compareEl = $('[data-knr-compare]', scope);
-      var unitEl = $('[data-knr-unit]', scope);
+      var priceEls = $$('[data-knr-price]', scope);
+      var compareEls = $$('[data-knr-compare]', scope);
+      var unitEls = $$('[data-knr-unit]', scope);
       var idInput = $('[data-knr-variant-id]', scope);
       var submit = $('[data-knr-add]', scope);
 
@@ -82,15 +82,15 @@
           buttons.forEach(function (b) { b.classList.remove('is-active'); });
           btn.classList.add('is-active');
 
-          if (priceEl) priceEl.textContent = btn.dataset.price || '';
-          if (compareEl) {
-            compareEl.textContent = btn.dataset.compare || '';
-            compareEl.hidden = !btn.dataset.compare;
-          }
-          if (unitEl) {
-            unitEl.textContent = btn.dataset.unit || '';
-            unitEl.hidden = !btn.dataset.unit;
-          }
+          priceEls.forEach(function (el) { el.textContent = btn.dataset.price || ''; });
+          compareEls.forEach(function (el) {
+            el.textContent = btn.dataset.compare || '';
+            el.hidden = !btn.dataset.compare;
+          });
+          unitEls.forEach(function (el) {
+            el.textContent = btn.dataset.unit || '';
+            el.hidden = !btn.dataset.unit;
+          });
           if (idInput) idInput.value = btn.dataset.variantId || '';
           if (submit) {
             var soldOut = btn.dataset.available === 'false';
