@@ -93,7 +93,7 @@
 
 /* Star rating. */
 .knr-stars { display: inline-flex; gap: 2px; color: var(--knr-star); line-height: 0; }
-.knr-stars svg { width: 15px; height: 15px; }
+.knr-stars svg { width: 15px; height: 15px; flex: none; }
 .knr-stars svg .knr-star-empty { fill: none; stroke: currentColor; stroke-width: 1.3; }
 
 /* Shared editorial paragraph. */
