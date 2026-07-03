@@ -43,12 +43,10 @@
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
-.knr-root *,
-.knr-root *::before,
-.knr-root *::after { box-sizing: border-box; }
-.knr-root img { display: block; max-width: 100%; }
-.knr-root a { color: inherit; text-decoration: none; }
-.knr-root button {
+:where(.knr-root *, .knr-root *::before, .knr-root *::after) { box-sizing: border-box; }
+:where(.knr-root) img { display: block; max-width: 100%; }
+:where(.knr-root) a { color: inherit; text-decoration: none; }
+:where(.knr-root) button {
   font: inherit;
   color: inherit;
   background: none;
