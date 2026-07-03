@@ -1,5 +1,5 @@
 <div class="knr-root">
-  <section class="knr-test">
+  <section class="knr-test" style="background-color: {{ section.settings.background }};">
     <div class="knr-wrap">
       <div class="knr-test__head">
         {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
@@ -57,6 +57,7 @@
   "name": "KNR Témoignages",
   "tag": "section",
   "settings": [
+    { "type": "color", "id": "background", "label": "Couleur de fond", "default": "#f9f8f5" },
     { "type": "text", "id": "heading", "label": "Titre", "default": "Ce que disent nos clientes" },
     { "type": "textarea", "id": "subheading", "label": "Sous-titre", "default": "Des transformations visibles dès 4 semaines. Nos clientes témoignent d'une peau visiblement régénérée, plus ferme et lumineuse." },
     { "type": "header", "content": "Avant / Après" },

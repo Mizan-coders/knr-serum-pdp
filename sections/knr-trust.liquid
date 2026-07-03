@@ -1,5 +1,5 @@
 <div class="knr-root">
-  <section class="knr-trust">
+  <section class="knr-trust" style="background-color: {{ section.settings.background }};">
     <div class="knr-wrap">
       <div class="knr-trust__track" data-knr-rail="trust" data-knr-drag>
         {%- for block in section.blocks -%}
@@ -22,6 +22,9 @@
 {
   "name": "KNR Réassurance",
   "tag": "section",
+  "settings": [
+    { "type": "color", "id": "background", "label": "Couleur de fond", "default": "#f5f1e9" }
+  ],
   "blocks": [
     {
       "type": "item",

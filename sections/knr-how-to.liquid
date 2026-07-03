@@ -1,5 +1,5 @@
 <div class="knr-root">
-  <section class="knr-howto">
+  <section class="knr-howto" style="background-color: {{ section.settings.background }};">
     <div class="knr-wrap">
       {%- if section.settings.heading != blank -%}<h2 class="knr-howto__title">{{ section.settings.heading }}</h2>{%- endif -%}
       <div class="knr-howto__track" data-knr-rail="howto" data-knr-drag>
@@ -41,6 +41,7 @@
   "name": "KNR Mode d'emploi",
   "tag": "section",
   "settings": [
+    { "type": "color", "id": "background", "label": "Couleur de fond", "default": "#ffffff" },
     { "type": "text", "id": "heading", "label": "Titre", "default": "How to use" }
   ],
   "blocks": [

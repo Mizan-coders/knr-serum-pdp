@@ -60,7 +60,7 @@
       </div>
     </div>
 
-    <div class="knr-info" data-knr-buybox>
+    <div class="knr-info" data-knr-buybox style="background-color: {{ section.settings.card_background }};">
       <nav class="knr-crumb" aria-label="Fil d'Ariane">
         {%- if first_collection -%}
           <a href="{{ first_collection.url }}">{{ first_collection.title }}</a>
@@ -194,6 +194,7 @@
   "name": "KNR Produit",
   "tag": "section",
   "settings": [
+    { "type": "color", "id": "card_background", "label": "Fond de la fiche", "default": "#ffffff" },
     { "type": "header", "content": "Informations produit" },
     { "type": "textarea", "id": "short_description", "label": "Description courte", "default": "Une huile anti-âge sèche ultra fine qui travaille en synergie avec la peau pour la maintenir ferme, pleine de vitalité tout en lissant les rides." },
     { "type": "richtext", "id": "certs", "label": "Certifications", "default": "<p><strong>Yuka</strong> 100/100 · <strong>INCI Beauty</strong> 20/20</p>" },

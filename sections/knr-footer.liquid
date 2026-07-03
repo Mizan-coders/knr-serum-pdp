@@ -3,7 +3,7 @@
 -%}
 
 <div class="knr-root">
-  <footer class="knr-foot">
+  <footer class="knr-foot" style="background-color: {{ section.settings.background }};">
     <div class="knr-wrap">
       {%- comment -%} Mobile: collapsible menu columns {%- endcomment -%}
       {%- for block in menu_blocks -%}
@@ -93,6 +93,7 @@
 {
   "name": "KNR Pied de page",
   "settings": [
+    { "type": "color", "id": "background", "label": "Couleur de fond", "default": "#ffffff" },
     { "type": "header", "content": "À propos" },
     { "type": "text", "id": "about_heading", "label": "Titre", "default": "À propos de Maison Célestine" },
     { "type": "textarea", "id": "about_text", "label": "Texte", "default": "Maison Célestine est une marque de soins anti-âge haut de gamme formulés à partir d'ingrédients d'origine naturelle soigneusement sélectionnés." },

@@ -1,5 +1,5 @@
 <div class="knr-root">
-  <section class="knr-faq">
+  <section class="knr-faq" style="background-color: {{ section.settings.background }};">
     <div class="knr-wrap knr-faq__grid">
       {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
       <div class="knr-accordions" data-knr-acc-group>
@@ -24,6 +24,7 @@
   "name": "KNR FAQ",
   "tag": "section",
   "settings": [
+    { "type": "color", "id": "background", "label": "Couleur de fond", "default": "#ffffff" },
     { "type": "text", "id": "heading", "label": "Titre", "default": "Questions fréquentes" }
   ],
   "blocks": [

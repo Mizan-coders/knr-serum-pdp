@@ -3,7 +3,7 @@
 -%}
 
 <div class="knr-root">
-  <header class="knr-header" data-knr-header>
+  <header class="knr-header" data-knr-header style="--knr-header-tint: {{ section.settings.tint }};">
     <div class="knr-wrap knr-header__in">
       <a href="{{ routes.root_url }}" class="knr-logo">
         {%- if section.settings.logo -%}
@@ -55,6 +55,7 @@
 {
   "name": "KNR En-tête",
   "settings": [
+    { "type": "color", "id": "tint", "label": "Teinte de fond", "default": "#d5cfac" },
     { "type": "image_picker", "id": "logo", "label": "Logo (image)" },
     { "type": "text", "id": "logo_text", "label": "Logo (texte)", "default": "maison célestine" },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
@@ -65,8 +66,8 @@
 {% endschema %}
 
 {% stylesheet %}
-.knr-header { position: sticky; top: 0; z-index: 40; background: linear-gradient(180deg, #d5cfac 0%, rgba(213, 207, 172, 0) 100%); transition: background 0.3s, box-shadow 0.3s; }
-.knr-header.is-stuck { background: #d5cfac; box-shadow: 0 1px 0 var(--knr-line); }
+.knr-header { position: sticky; top: 0; z-index: 40; background: linear-gradient(180deg, var(--knr-header-tint, #d5cfac) 0%, transparent 100%); transition: background 0.3s, box-shadow 0.3s; }
+.knr-header.is-stuck { background: var(--knr-header-tint, #d5cfac); box-shadow: 0 1px 0 var(--knr-line); }
 .knr-header__in { display: flex; align-items: center; justify-content: space-between; height: var(--knr-header-h); }
 .knr-root .knr-logo { font-family: var(--knr-font-brand); font-weight: 400; font-size: 23px; letter-spacing: 0.01em; color: #fcfbfc; }
 .knr-logo__img { max-height: 20px; width: auto; }

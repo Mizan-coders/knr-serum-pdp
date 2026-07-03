@@ -1,5 +1,5 @@
 <div class="knr-root">
-  <section class="knr-nl">
+  <section class="knr-nl" style="background-color: {{ section.settings.background }};">
     <div class="knr-wrap knr-nl__in">
       <div class="knr-nl__img">
         {% render 'knr-image', image: section.settings.image, asset: 'knr-routine-bundle.png', alt: section.settings.heading, width: 1200, widths: '600,900,1200' %}
@@ -26,6 +26,7 @@
   "name": "KNR Newsletter",
   "tag": "section",
   "settings": [
+    { "type": "color", "id": "background", "label": "Couleur de fond", "default": "#ffffff" },
     { "type": "image_picker", "id": "image", "label": "Image" },
     { "type": "textarea", "id": "heading", "label": "Titre", "default": "L'alliance de la science botanique et du luxe naturel pour une peau visiblement rajeunie en 4 semaines." },
     { "type": "text", "id": "placeholder", "label": "Champ e-mail", "default": "E-mail" },

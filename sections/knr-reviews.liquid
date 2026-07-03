@@ -23,7 +23,7 @@
 -%}
 
 <div class="knr-root">
-  <section class="knr-rev">
+  <section class="knr-rev" style="background-color: {{ section.settings.background }};">
     <div class="knr-wrap">
       {%- if section.settings.heading != blank -%}<h2>{{ section.settings.heading }}</h2>{%- endif -%}
 
@@ -94,6 +94,7 @@
   "name": "KNR Avis",
   "tag": "section",
   "settings": [
+    { "type": "color", "id": "background", "label": "Couleur de fond", "default": "#ffffff" },
     { "type": "text", "id": "heading", "label": "Titre", "default": "Avis clients" },
     { "type": "range", "id": "rating", "label": "Note moyenne", "min": 0, "max": 5, "step": 0.1, "default": 4.7 },
     { "type": "text", "id": "total", "label": "Total d'avis", "default": "200" },
