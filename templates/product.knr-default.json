@@ -32,9 +32,24 @@
             "content": "<p>Convient à toutes les peaux, y compris les plus sensibles. Sans parfum de synthèse, testé dermatologiquement.</p>"
           }
         },
-        "rel_1": { "type": "related", "settings": {} },
-        "rel_2": { "type": "related", "settings": {} },
-        "rel_3": { "type": "related", "settings": {} }
+        "rel_1": {
+          "type": "related",
+          "settings": {
+            "product": "serum-precieux-regenerant-new-one"
+          }
+        },
+        "rel_2": {
+          "type": "related",
+          "settings": {
+            "product": "serum-precieux-regenerant-new-two"
+          }
+        },
+        "rel_3": {
+          "type": "related",
+          "settings": {
+            "product": "serum-precieux-regenerant"
+          }
+        }
       },
       "block_order": [
         "acc_description",
@@ -81,8 +96,14 @@
           }
         }
       },
-      "block_order": ["step_1", "step_2", "step_3"],
-      "settings": { "heading": "How to use" }
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ],
+      "settings": {
+        "heading": "How to use"
+      }
     },
     "testimonials": {
       "type": "knr-testimonials",
@@ -112,7 +133,11 @@
           }
         }
       },
-      "block_order": ["q_1", "q_2", "q_3"],
+      "block_order": [
+        "q_1",
+        "q_2",
+        "q_3"
+      ],
       "settings": {}
     },
     "faq": {
@@ -154,7 +179,13 @@
           }
         }
       },
-      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4", "faq_5"],
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5"
+      ],
       "settings": {}
     },
     "reviews": {
@@ -191,7 +222,11 @@
           }
         }
       },
-      "block_order": ["rev_1", "rev_2", "rev_3"],
+      "block_order": [
+        "rev_1",
+        "rev_2",
+        "rev_3"
+      ],
       "settings": {}
     },
     "news": {
@@ -230,7 +265,12 @@
           }
         }
       },
-      "block_order": ["post_1", "post_2", "post_3", "post_4"],
+      "block_order": [
+        "post_1",
+        "post_2",
+        "post_3",
+        "post_4"
+      ],
       "settings": {}
     },
     "newsletter": {
@@ -240,12 +280,41 @@
     "trust": {
       "type": "knr-trust",
       "blocks": {
-        "t_1": { "type": "item", "settings": { "title": "Livraison offerte", "text": "Livraison offerte dès 60 € d'achat en France métropolitaine." } },
-        "t_2": { "type": "item", "settings": { "title": "Retours gratuits", "text": "Retours acceptés jusqu'à 30 jours après réception." } },
-        "t_3": { "type": "item", "settings": { "title": "Paiement sécurisé", "text": "Paiement 100 % sécurisé par carte bancaire, PayPal ou virement." } },
-        "t_4": { "type": "item", "settings": { "title": "Service client", "text": "Du lundi au vendredi de 9h à 18h par email et téléphone." } }
+        "t_1": {
+          "type": "item",
+          "settings": {
+            "title": "Livraison offerte",
+            "text": "Livraison offerte dès 60 € d'achat en France métropolitaine."
+          }
+        },
+        "t_2": {
+          "type": "item",
+          "settings": {
+            "title": "Retours gratuits",
+            "text": "Retours acceptés jusqu'à 30 jours après réception."
+          }
+        },
+        "t_3": {
+          "type": "item",
+          "settings": {
+            "title": "Paiement sécurisé",
+            "text": "Paiement 100 % sécurisé par carte bancaire, PayPal ou virement."
+          }
+        },
+        "t_4": {
+          "type": "item",
+          "settings": {
+            "title": "Service client",
+            "text": "Du lundi au vendredi de 9h à 18h par email et téléphone."
+          }
+        }
       },
-      "block_order": ["t_1", "t_2", "t_3", "t_4"],
+      "block_order": [
+        "t_1",
+        "t_2",
+        "t_3",
+        "t_4"
+      ],
       "settings": {}
     }
   },
