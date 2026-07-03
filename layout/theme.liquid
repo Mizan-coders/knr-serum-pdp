@@ -335,9 +335,7 @@
       {{ 'accessibility.skip_to_text' | t }}
     </a>
 
-    {%- if settings.cart_type == 'drawer' -%}
-      {%- render 'cart-drawer' -%}
-    {%- endif -%}
+    {%- comment -%} Dawn's cart-drawer is replaced by the theme's own knr-drawer (in the header). {%- endcomment -%}
 
     {% sections 'header-group' %}
 
